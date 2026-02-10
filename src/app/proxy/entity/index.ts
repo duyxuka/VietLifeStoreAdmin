@@ -1,0 +1,12 @@
+import * as Banners from './banners';
+import * as CamNangs from './cam-nangs';
+import * as CamNangsList from './cam-nangs-list';
+import * as ChinhSachs from './chinh-sachs';
+import * as ChinhSachsList from './chinh-sachs-list';
+import * as DonHangs from './don-hangs';
+import * as DonHangsList from './don-hangs-list';
+import * as LienHes from './lien-hes';
+import * as SanPhams from './san-phams';
+import * as SanPhamsList from './san-phams-list';
+import * as TaiKhoans from './tai-khoans';
+export { Banners, CamNangs, CamNangsList, ChinhSachs, ChinhSachsList, DonHangs, DonHangsList, LienHes, SanPhams, SanPhamsList, TaiKhoans };

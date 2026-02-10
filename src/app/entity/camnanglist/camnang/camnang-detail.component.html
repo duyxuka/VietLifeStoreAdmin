@@ -1,0 +1,164 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnl header="Chi tiết cẩm nang">
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+
+        <!-- Tên cẩm nang -->
+        <div>
+          <label class="block font-bold mb-2">
+            Tên cẩm nang <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="ten"
+            placeholder="Nhập tên cẩm nang"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="ten"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Slug -->
+        <div>
+          <label class="block font-bold mb-2">
+            Slug <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="slug"
+            placeholder="tu-dong-tao-slug"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="slug"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Danh mục -->
+        <div>
+          <label class="block font-bold mb-2">
+            Danh mục cẩm nang <span class="text-red-500">*</span>
+          </label>
+          <p-select
+            [options]="danhMucOptions"
+            optionLabel="ten"
+            optionValue="id"
+            formControlName="danhMucCamNangId"
+            placeholder="Chọn danh mục"
+            fluid
+          ></p-select>
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="danhMucCamNangId"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Ảnh đại diện -->
+        <div>
+          <label class="block font-bold mb-2">Ảnh đại diện</label>
+
+          <p-fileUpload
+            mode="basic"
+            name="file"
+            accept="image/*"
+            chooseLabel="Chọn ảnh"
+            [auto]="false"
+            customUpload="true"
+            (onSelect)="onSelectImage($event)"
+            [maxFileSize]="204800"
+            class="w-full"
+          ></p-fileUpload>
+
+          @if (previewImage) {
+            <img
+            [src]="previewImage"
+            class="mt-3 border rounded w-40"
+          />
+          }
+        </div>
+        <!-- Mô tả / Nội dung -->
+        <div>
+          <label class="block font-bold mb-2">
+            Nội dung <span class="text-red-500">*</span>
+          </label>
+          @if (editorReady) {
+            <ckeditor
+              [editor]="Editor"
+              [config]="configCkeditor"
+              formControlName="mota">
+            </ckeditor>
+          }
+
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="mota"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- SEO -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold mb-2">Title SEO</label>
+            <input pInputText formControlName="titleSEO" fluid />
+          </div>
+
+          <div>
+            <label class="block font-bold mb-2">Keyword</label>
+            <input pInputText formControlName="keyword" fluid />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold mb-2">Description SEO</label>
+          <textarea
+            pInputTextarea
+            rows="3"
+            formControlName="descriptionSEO"
+            fluid
+          ></textarea>
+        </div>
+
+        <!-- Trạng thái -->
+        <div class="flex items-center gap-3">
+          <label class="font-bold">Trạng thái</label>
+          <p-toggleswitch formControlName="trangThai"></p-toggleswitch>
+        </div>
+
+      </div>
+    </ng-template>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            (onClick)="cancel()"
+            class="mr-2"
+          />
+          <p-button
+            type="submit"
+            label="Lưu lại"
+            icon="pi pi-check"
+            [disabled]="!form.valid || btnDisabled"
+            [loading]="btnDisabled"
+          />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <p-blockui [blocked]="blockedPanel" [target]="pnl">
+      <p-progress-spinner style="top: 37%;" />
+    </p-blockui>
+  </p-panel>
+</form>

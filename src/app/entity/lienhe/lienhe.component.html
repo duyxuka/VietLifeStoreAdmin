@@ -1,0 +1,107 @@
+<p-panel header="Danh sách liên hệ" #dt>
+
+  <!-- Toolbar -->
+  <p-toolbar styleClass="mb-4">
+    <ng-template #start>
+      <p-button
+        label="Xóa"
+        icon="pi pi-trash"
+        severity="danger"
+        [disabled]="selectedItems.length === 0"
+        (onClick)="deleteItems()" />
+    </ng-template>
+
+    <ng-template #end>
+      <p-iconfield iconPosition="left">
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          [(ngModel)]="keyword"
+          (keyup.enter)="loadData()"
+          placeholder="Tìm theo họ tên / email / SĐT" />
+      </p-iconfield>
+
+      <p-button
+        icon="pi pi-search"
+        severity="secondary"
+        class="ml-2"
+        (onClick)="loadData()" />
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Table -->
+  <p-table
+    [value]="items"
+    [(selection)]="selectedItems"
+    selectionMode="multiple"
+    dataKey="id"
+    [rowHover]="true"
+    [tableStyle]="{ 'min-width': '80rem' }">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:3rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>SĐT</th>
+        <th>Nội dung</th>
+        <th>Trạng thái</th>
+        <th style="width:10rem">Thao tác</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-row>
+      <tr [pSelectableRow]="row">
+        <td>
+          <p-tableCheckbox [value]="row" />
+        </td>
+
+        <td>{{ row.hoTen }}</td>
+        <td>{{ row.email }}</td>
+        <td>{{ row.soDienThoai }}</td>
+        <td style="max-width:30rem">
+          <span class="line-clamp-2">{{ row.noiDung }}</span>
+        </td>
+
+        <td>
+          <p-tag
+            [severity]="row.daXuLy ? 'success' : 'warning'"
+            [value]="row.daXuLy ? 'Đã xử lý' : 'Chưa xử lý'" />
+        </td>
+
+        <td>
+          @if(!row.daXuLy) {
+          <p-button
+            icon="pi pi-check"
+            severity="success"
+            size="small"
+            (onClick)="markAsProcessed(row)"
+            pTooltip="Đánh dấu đã xử lý" />
+          }
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary">
+      Tổng số liên hệ: {{ totalCount }}
+    </ng-template>
+  </p-table>
+
+  <!-- Paginator -->
+  <p-paginator
+    [rows]="maxResultCount"
+    [totalRecords]="totalCount"
+    (onPageChange)="pageChanged($event)"
+    [rowsPerPageOptions]="[10,20,30,50,100]"
+    [showCurrentPageReport]="true">
+  </p-paginator>
+
+  <!-- Block UI -->
+  <p-blockui [blocked]="blockedPanel" [target]="dt">
+    <p-progress-spinner />
+  </p-blockui>
+
+</p-panel>

@@ -1,0 +1,113 @@
+<p-panel header="Quản lý quyền" #dt>
+  <!-- Toolbar -->
+  <p-toolbar class="mb-4">
+    <ng-template #start>
+      <p-button
+        label="Thêm"
+        icon="pi pi-plus"
+        severity="secondary"
+        class="mr-2"
+        (onClick)="showAddModal()"
+      ></p-button>
+
+      <p-button
+        label="Sửa"
+        icon="pi pi-pencil"
+        severity="help"
+        class="mr-2"
+        [disabled]="selectedItems.length !== 1"
+        (onClick)="showEditModal()"
+      ></p-button>
+
+      <p-button
+        label="Xóa"
+        icon="pi pi-trash"
+        severity="danger"
+        [disabled]="selectedItems.length === 0"
+        (onClick)="deleteItems()"
+      ></p-button>
+    </ng-template>
+
+    <ng-template #end>
+      <p-iconfield iconPosition="left">
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          #searchInput
+          pInputText
+          type="text"
+          [(ngModel)]="keyword"
+          (keyup.enter)="loadData()"
+          placeholder="Tìm kiếm..."
+          class="w-full"
+        />
+      </p-iconfield>
+      <p-button
+        icon="pi pi-search"
+        severity="secondary"
+        class="ml-2"
+        (onClick)="loadData()"
+      />
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Table -->
+  <p-table
+    #pnl
+    [value]="items"
+    [(selection)]="selectedItems"
+    selectionMode="multiple"
+    dataKey="id"
+    [rowHover]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    scrollable="true"
+    scrollHeight="400px"
+  >
+    <ng-template #header>
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th style="min-width: 14rem">Tên</th>
+        <th style="min-width: 16rem">Mô tả</th>
+        <th style="min-width: 10rem">Thao tác</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-row>
+      <tr [pSelectableRow]="row">
+        <td>
+          <p-tableCheckbox [value]="row"></p-tableCheckbox>
+        </td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.description }}</td>
+        <td>
+          <p-button
+            label="Phân quyền"
+            icon="pi pi-lock"
+            (onClick)="showPermissionModal(row.id, row.name)"
+            class="p-button-sm"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #summary>
+      <div style="padding: 1rem 0;">Tổng số bản ghi: {{ totalCount | number }}</div>
+    </ng-template>
+  </p-table>
+
+  <!-- Paginator -->
+  <p-paginator
+    [rows]="maxResultCount"
+    [totalRecords]="totalCount"
+    (onPageChange)="pageChanged($event)"
+    [rowsPerPageOptions]="[10, 20, 30, 50, 100]"
+    [showPageLinks]="true"
+    [showCurrentPageReport]="true"
+  ></p-paginator>
+
+  <!-- Block UI -->
+  <p-blockUI [blocked]="blockedPanel" [target]="dt">
+    <p-progressSpinner style="top: 37%;"></p-progressSpinner>
+  </p-blockUI>
+</p-panel>

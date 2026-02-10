@@ -1,0 +1,96 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnl header="Chi tiết voucher">
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+
+        <!-- Mã voucher -->
+        <div>
+          <label class="block font-bold mb-2">
+            Mã voucher <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="maVoucher"
+            placeholder="VD: SALE2026"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="maVoucher"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Giá trị giảm -->
+        <div>
+          <label class="block font-bold mb-2">
+            Giá trị giảm <span class="text-red-500">*</span>
+          </label>
+          <p-inputNumber
+            formControlName="giamGia"
+            [min]="0"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="giamGia"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Giảm theo % -->
+        <div class="flex items-center gap-3">
+          <label class="font-bold">Giảm theo phần trăm</label>
+          <p-toggleswitch formControlName="laPhanTram"></p-toggleswitch>
+        </div>
+
+        <!-- Đơn hàng tối thiểu -->
+        <div>
+          <label class="block font-bold mb-2">Đơn hàng tối thiểu</label>
+          <p-inputNumber formControlName="donHangToiThieu" [min]="0" fluid />
+        </div>
+
+        <!-- Số lượng -->
+        <div>
+          <label class="block font-bold mb-2">
+            Số lượng <span class="text-red-500">*</span>
+          </label>
+          <p-inputNumber formControlName="soLuong" [min]="0" fluid />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="soLuong"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+      </div>
+    </ng-template>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            (onClick)="cancel()"
+            class="mr-2"
+          />
+          <p-button
+            type="submit"
+            label="Lưu lại"
+            icon="pi pi-check"
+            [disabled]="!form.valid || btnDisabled"
+            [loading]="btnDisabled"
+          />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <p-blockui [blocked]="blockedPanel" [target]="pnl">
+      <p-progress-spinner style="top: 37%;" />
+    </p-blockui>
+  </p-panel>
+</form>

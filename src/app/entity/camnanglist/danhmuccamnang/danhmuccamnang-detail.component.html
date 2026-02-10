@@ -1,0 +1,113 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnl header="Chi tiết danh mục cẩm nang">
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+
+        <!-- Tên danh mục -->
+        <div>
+          <label class="block font-bold mb-2">
+            Tên danh mục <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="ten"
+            placeholder="Nhập tên danh mục cẩm nang"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="ten"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Slug -->
+        <div>
+          <label class="block font-bold mb-2">
+            Slug <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="slug"
+            placeholder="tu-dong-tao-tu-ten"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="slug"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- SEO Title -->
+        <div>
+          <label class="block font-bold mb-2">Title SEO</label>
+          <input
+            pInputText
+            formControlName="titleSEO"
+            placeholder="Nhập title SEO"
+            fluid
+          />
+        </div>
+
+        <!-- SEO Keyword -->
+        <div>
+          <label class="block font-bold mb-2">Keyword SEO</label>
+          <input
+            pInputText
+            formControlName="keyword"
+            placeholder="Từ khóa SEO"
+            fluid
+          />
+        </div>
+
+        <!-- SEO Description -->
+        <div>
+          <label class="block font-bold mb-2">Description SEO</label>
+          <textarea
+            pInputTextarea
+            formControlName="descriptionSEO"
+            rows="3"
+            placeholder="Mô tả SEO"
+            fluid
+          ></textarea>
+        </div>
+
+        <!-- Trạng thái -->
+        <div class="flex items-center gap-3">
+          <label class="font-bold">Trạng thái</label>
+          <p-toggleswitch formControlName="trangThai"></p-toggleswitch>
+        </div>
+
+      </div>
+    </ng-template>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            [rounded]="true"
+            class="mr-2"
+            (onClick)="cancel()"
+          />
+          <p-button
+            type="submit"
+            label="Lưu lại"
+            icon="pi pi-check"
+            [disabled]="!form.valid || btnDisabled"
+            [loading]="btnDisabled"
+          />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <p-blockui [blocked]="blockedPanel" [target]="pnl">
+      <p-progress-spinner style="top: 37%;" />
+    </p-blockui>
+  </p-panel>
+</form>

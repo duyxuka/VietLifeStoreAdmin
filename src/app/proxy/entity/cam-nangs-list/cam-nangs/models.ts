@@ -1,0 +1,37 @@
+import type { EntityDto } from '@abp/ng.core';
+
+export interface CamNangDto {
+  id?: string;
+  ten?: string;
+  slug?: string;
+  mota?: string;
+  anh?: string;
+  danhMucCamNangId?: string;
+  trangThai: boolean;
+  titleSEO?: string;
+  keyword?: string;
+  descriptionSEO?: string;
+}
+
+export interface CamNangInListDto extends EntityDto<string> {
+  ten?: string;
+  slug?: string;
+  mota?: string;
+  anh?: string;
+  danhMucCamNangId?: string;
+  trangThai: boolean;
+}
+
+export interface CreateUpdateCamNangDto {
+  ten?: string;
+  slug?: string;
+  mota?: string;
+  anh?: string;
+  danhMucCamNangId?: string;
+  trangThai: boolean;
+  titleSEO?: string;
+  keyword?: string;
+  descriptionSEO?: string;
+  anhName?: string;
+  anhContent?: string;
+}

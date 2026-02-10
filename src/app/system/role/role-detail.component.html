@@ -1,0 +1,65 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnlDetail header="Quản lý quyền">
+    <!-- Form Content -->
+    <div class="flex flex-col gap-6 mt-4">
+      <!-- Tên quyền -->
+      <div>
+        <label for="name" class="block font-bold mb-2">
+          Tên quyền <span class="text-red-500">*</span>
+        </label>
+        <input
+          id="name"
+          pInputText
+          type="text"
+          formControlName="name"
+          placeholder="Nhập tên quyền"
+          fluid />
+        <app-validation-message
+          [entityForm]="form"
+          fieldName="name"
+          [validationMessages]="validationMessages"></app-validation-message>
+      </div>
+
+      <!-- Mô tả quyền -->
+      <div>
+        <label for="description" class="block font-bold mb-2">Mô tả</label>
+        <textarea
+          id="description"
+          pTextarea
+          formControlName="description"
+          rows="4"
+          placeholder="Nhập mô tả quyền (không bắt buộc)"
+          fluid></textarea>
+        <app-validation-message
+          [entityForm]="form"
+          fieldName="description"
+          [validationMessages]="validationMessages"></app-validation-message>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            [rounded]="true"
+            (onClick)="cancel()"
+            class="mr-2"></p-button>
+          <p-button type="submit" class="btn btn-primary"
+            [disabled]="!form.valid || btnDisabled">
+            {{ saveBtnName }}
+          </p-button>
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <p-blockui [target]="pnlDetail" [blocked]="blockedPanelDetail">
+      <p-progressspinner
+        [style]="{ width: '100px', height: '100px', position: 'absolute', top: '25%', left: '50%' }"
+        strokeWidth="2"
+        animationDuration=".5s"></p-progressspinner>
+    </p-blockui>
+  </p-panel>
+</form>

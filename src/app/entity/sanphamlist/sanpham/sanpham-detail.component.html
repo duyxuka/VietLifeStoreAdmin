@@ -1,0 +1,293 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnl header="Chi tiết sản phẩm" [toggleable]="true">
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+        <!-- Tên sản phẩm -->
+        <div>
+          <label class="font-bold mb-2 block">Tên sản phẩm <span class="text-red-500">*</span></label>
+          <input pInputText formControlName="ten" placeholder="Nhập tên sản phẩm (tối đa 120 ký tự)" fluid maxlength="120" />
+          <app-validation-message [entityForm]="form" fieldName="ten" [validationMessages]="validationMessages" />
+        </div>
+        <!-- Danh mục -->
+        <div>
+          <label class="font-bold mb-2 block">Danh mục <span class="text-red-500">*</span></label>
+          <p-select formControlName="danhMucId" [options]="danhMucOptions" optionLabel="ten" optionValue="id" placeholder="Chọn danh mục" fluid [showClear]="true"/>
+          <app-validation-message [entityForm]="form" fieldName="danhMucId" [validationMessages]="validationMessages" />
+        </div>
+        <div>
+          <label class="font-bold mb-2 block">Quà tặng</label>
+          <p-select
+            formControlName="quaTangId"
+            [options]="quaTangOptions"
+            optionLabel="ten"
+            optionValue="id"
+            placeholder="Chọn quà tặng (nếu có)"
+            [showClear]="true"
+            fluid>
+          </p-select>
+        </div>
+        <!-- Slug -->
+        <div>
+          <label class="font-bold mb-2 block">Slug (tự động tạo từ tên)</label>
+          <input pInputText formControlName="slug" placeholder="tu-dong-tao-hoac-tu-nhap" fluid />
+        </div>
+        <!-- Ảnh chính -->
+        <div>
+          <label class="font-bold mb-2 block">
+            Ảnh đại diện (ảnh chính) <span class="text-red-500">*</span>
+          </label>
+
+          <p-fileUpload
+            mode="basic"
+            name="file"
+            accept="image/*"
+            chooseLabel="Chọn ảnh"
+            [auto]="false"
+            customUpload="true"
+            (onSelect)="onAnhDaiDienSelect($event)"
+            [maxFileSize]="204800"
+            class="w-full">
+          </p-fileUpload>
+
+          @if (anhDaiDienPreview) {
+            <p-image [src]="anhDaiDienPreview" width="300" [preview]="true" />
+          }
+        </div>
+
+        <!-- Ảnh phụ -->
+        <div>
+          <label class="font-bold mb-2 block">Ảnh phụ (tối đa 9 ảnh)</label>
+
+          <p-fileUpload
+            mode="basic"
+            name="files"
+            accept="image/*"
+            chooseLabel="Chọn ảnh phụ"
+            [auto]="false"
+            customUpload="true"
+            (onSelect)="onAnhPhuSelect($event)"
+            [multiple]="true"
+            class="w-full">
+          </p-fileUpload>
+
+          <div class="flex flex-wrap gap-4 mt-2">
+            <div *ngFor="let img of anhPhuPreviews; let i = index" class="relative" style="border-radius: 20px; border: 1px solid #a9a9a9; padding: 15px;">
+              <p-image [src]="img" width="150" [preview]="true" />
+              <button
+                pButton
+                icon="pi pi-times"
+                class="p-button-danger p-button-rounded absolute top-0 right-0"
+                (click)="removeAnhPhu(i)">
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mô tả ngắn -->
+        <div>
+          <label class="font-bold mb-2 block">Mô tả ngắn</label>
+          @if (editorReady) {
+            <ckeditor
+              [editor]="Editor"
+              [config]="configCkeditor"
+              formControlName="moTaNgan">
+            </ckeditor>
+          }
+        </div>
+        <!-- Mô tả chi tiết -->
+        <div>
+          <label class="font-bold mb-2 block">Mô tả chi tiết sản phẩm</label>
+          @if (editorReady) {
+            <ckeditor
+              [editor]="Editor"
+              [config]="configCkeditor"
+              formControlName="moTa">
+            </ckeditor>
+          }
+        </div>
+        <!-- Hướng dẫn sử dụng -->
+        <div>
+          <label class="font-bold mb-2 block">Hướng dẫn sử dụng</label>
+           @if (editorReady) {
+            <ckeditor
+              [editor]="Editor"
+              [config]="configCkeditor"
+              formControlName="huongDanSuDung">
+            </ckeditor>
+          }
+        </div>
+
+        <!-- Thông số kỹ thuật -->
+        <div>
+          <label class="font-bold mb-2 block">Thông số kỹ thuật</label>
+          @if (editorReady) {
+            <ckeditor
+              [editor]="Editor"
+              [config]="configCkeditor"
+              formControlName="thongSoKyThuat">
+            </ckeditor>
+          }
+        </div>
+
+        <!-- Giá mặc định (dùng để gợi ý cho biến thể) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label class="font-bold mb-2 block">Giá bán <span class="text-red-500">*</span></label>
+            <p-inputNumber formControlName="gia" mode="decimal" [min]="0" placeholder="0" fluid />
+          </div>
+          <div>
+            <label class="font-bold mb-2 block">Giảm giá (%)</label>
+            <p-inputNumber formControlName="phanTramKhuyenMai" [min]="0" [max]="100" suffix="%" fluid />
+          </div>
+          <div>
+            <label class="font-bold mb-2 block">Giá khuyến mãi</label>
+            <p-inputNumber formControlName="giaKhuyenMai" mode="decimal" [min]="0" placeholder="0" fluid />
+          </div>
+        </div>
+        <!-- ====================== THUỘC TÍNH ====================== -->
+        <div class="mt-6">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-lg">Thuộc tính sản phẩm</h3>
+            <p-button
+              label="Thêm thuộc tính"
+              icon="pi pi-plus"
+              (click)="addThuocTinh()"
+              [outlined]="true"
+              size="small" />
+          </div>
+          <!-- Placeholder khi chưa có thuộc tính -->
+           @if (thuocTinhs.length === 0) {
+            <div class="text-center py-6 text-gray-500 italic bg-gray-50 rounded border border-dashed">
+              Chưa có thuộc tính nào.<br>
+              Nhấn <strong>"Thêm thuộc tính"</strong> để bắt đầu (ví dụ: Màu sắc, Kích thước, Dung lượng...)
+            </div>
+          } 
+          <div formArrayName="thuocTinhs">
+            <div *ngFor="let tt of thuocTinhs.controls; let i = index"
+                 [formGroupName]="i"
+                 class="border border-gray-300 rounded-lg p-4 mb-4 bg-gray-50">
+              <div class="flex items-center gap-3 mb-3">
+                <input
+                  pInputText
+                  placeholder="Tên thuộc tính (ví dụ: Màu sắc, Kích thước)"
+                  formControlName="ten"
+                  class="flex-1" />
+                <p-button
+                  icon="pi pi-trash"
+                  severity="danger"
+                  text
+                  rounded
+                  (onClick)="removeThuocTinh(i)" />
+              </div>
+              <div class="flex flex-col gap-2">
+                <input
+                  pInputText
+                  placeholder="Nhập giá trị rồi nhấn Enter (Đỏ, Xanh, Trắng...)"
+                  (keydown.enter)="$event.preventDefault(); addGiaTri(i, $event)"
+                  class="w-full" />
+
+                <!-- Hiển thị các giá trị đã thêm dưới dạng chips thủ công -->
+                <div class="flex flex-wrap gap-2 mt-2">
+                  <div *ngFor="let giaTriCtrl of getGiaTris(i).controls; let j = index"
+                      class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center gap-2 text-sm">
+                    {{  giaTriCtrl.value }}
+                    <button
+                      class="text-red-500 hover:text-red-700"
+                      (click)="removeGiaTri(i, j)">
+                      ×
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ====================== BIẾN THỂ ====================== -->
+         @if (bienThes.length > 0) {
+        <div class="mt-8" formArrayName="bienThes">
+          <h3 class="font-bold text-lg mb-3">
+            Biến thể sản phẩm ({{ bienThes.length }} biến thể)
+          </h3>
+
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300 text-sm">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="border p-3 text-left">Tên biến thể</th>
+                  <th class="border p-3">Giá bán</th>
+                  <th class="border p-3">Giá KM</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let variant of bienThes.controls; let i = index"
+                    [formGroupName]="i">
+
+                  <td class="border p-3 font-medium">
+                    {{ variant.get('ten')?.value || '(trống)' }}
+                  </td>
+
+                  <td class="border p-3">
+                    <p-inputNumber
+                      formControlName="gia"
+                      [min]="0"
+                      mode="decimal"
+                      fluid />
+                  </td>
+
+                  <td class="border p-3">
+                    <p-inputNumber
+                      formControlName="giaKhuyenMai"
+                      [min]="0"
+                      mode="decimal"
+                      fluid />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        }
+
+        @if (thuocTinhs.length === 0 && bienThes.length === 0) {
+          <div class="mt-4 text-center text-gray-500 italic">
+            Chưa có giá trị thuộc tính nào → chưa sinh được biến thể
+          </div>
+        }
+        <!-- SEO -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="font-bold mb-2 block">Title SEO</label>
+            <input pInputText formControlName="titleSEO" fluid maxlength="70" />
+          </div>
+          <div>
+            <label class="font-bold mb-2 block">Keyword SEO</label>
+            <input pInputText formControlName="keyword" fluid />
+          </div>
+          <div class="col-span-2">
+            <label class="font-bold mb-2 block">Description SEO</label>
+            <textarea pInputTextarea formControlName="descriptionSEO" rows="3" fluid maxlength="160"></textarea>
+          </div>
+        </div>
+        <!-- Trạng thái -->
+        <div class="flex items-center gap-2">
+          <p-toggleswitch formControlName="trangThai"></p-toggleswitch>
+          <label>Hiển thị sản phẩm</label>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button label="Hủy" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="cancel()" class="mr-2"/>
+          <p-button type="submit" label="Lưu sản phẩm" icon="pi pi-check"
+                    [disabled]="!form.valid || btnDisabled"
+                    [loading]="btnDisabled" />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+    <p-blockui [blocked]="blockedPanel" [target]="pnl">
+      <p-progress-spinner style="top: 13%;" />
+    </p-blockui>
+  </p-panel>
+</form>

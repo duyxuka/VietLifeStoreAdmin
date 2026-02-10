@@ -1,0 +1,99 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnl header="Chi tiết chính sách">
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+
+        <!-- Tiêu đề -->
+        <div>
+          <label class="block font-bold mb-2">
+            Tiêu đề <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="tieuDe"
+            placeholder="Nhập tiêu đề chính sách"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="tieuDe"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Danh mục -->
+        <div>
+          <label class="block font-bold mb-2">
+            Danh mục chính sách <span class="text-red-500">*</span>
+          </label>
+          <p-select
+            [options]="danhMucOptions"
+            optionLabel="ten"
+            optionValue="id"
+            formControlName="danhMucChinhSachId"
+            placeholder="Chọn danh mục"
+            fluid
+          ></p-select>
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="danhMucChinhSachId"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Nội dung -->
+        <div>
+          <label class="block font-bold mb-2">
+            Nội dung <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            pInputTextarea
+            rows="8"
+            formControlName="noiDung"
+            placeholder="Nhập nội dung chính sách"
+            fluid
+          ></textarea>
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="noiDung"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Trạng thái -->
+        <div class="flex items-center gap-3">
+          <label class="font-bold">Trạng thái</label>
+          <p-toggleswitch formControlName="trangThai"></p-toggleswitch>
+        </div>
+
+      </div>
+    </ng-template>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            (onClick)="cancel()"
+            class="mr-2"
+          />
+          <p-button
+            type="submit"
+            label="Lưu lại"
+            icon="pi pi-check"
+            [disabled]="!form.valid || btnDisabled"
+            [loading]="btnDisabled"
+          />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <p-blockui [blocked]="blockedPanel" [target]="pnl">
+      <p-progress-spinner style="top: 37%;" />
+    </p-blockui>
+  </p-panel>
+</form>

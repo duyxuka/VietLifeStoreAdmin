@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()">
+  <p-panel #pnlDetail header="Phân quyền cho Role" [toggleable]="true" [collapsed]="false">
+    
+    <!-- Tree Phân quyền -->
+    <div class="mt-4">
+      <p-tree
+        [value]="treeData"
+        selectionMode="checkbox"
+        [(selection)]="selectedNodes"
+        [propagateSelectionUp]="true"
+        [propagateSelectionDown]="true"
+        [style]="{ 'max-height': '400px', 'overflow-y': 'auto' }"
+      ></p-tree>
+    </div>
+
+    <!-- Footer với Toolbar -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            [rounded]="true"
+            (onClick)="cancel()"
+            class="mr-2"
+          ></p-button>
+          <p-button
+            type="submit"
+            label="Lưu lại"
+            icon="pi pi-check"
+            [disabled]="btnDisabled"
+            [loading]="btnDisabled"
+          ></p-button>
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <!-- Block UI -->
+    <p-blockUI [blocked]="blockedPanelDetail" [target]="pnlDetail">
+      <p-progressSpinner
+        [style]="{ width: '80px', height: '80px', position: 'absolute', top: '25%', left: '50%' }"
+        strokeWidth="2"
+        animationDuration=".5s"
+      ></p-progressSpinner>
+    </p-blockUI>
+  </p-panel>
+</form>

@@ -1,0 +1,113 @@
+<p-panel header="Danh sách danh mục cẩm nang" #dt>
+  <p-toolbar styleClass="mb-4">
+    <ng-template #start>
+      <p-button
+        label="Thêm"
+        icon="pi pi-plus"
+        class="mr-2"
+        severity="secondary"
+        (onClick)="showAddModal()"
+      />
+
+      <p-button
+        label="Sửa"
+        icon="pi pi-pencil"
+        class="mr-2"
+        severity="help"
+        [disabled]="selectedItems.length !== 1"
+        (onClick)="showEditModal()"
+      />
+
+      <p-button
+        label="Xóa"
+        icon="pi pi-trash"
+        severity="danger"
+        [disabled]="selectedItems.length === 0"
+        (onClick)="deleteItems()"
+      />
+    </ng-template>
+
+    <ng-template #end>
+      <p-iconfield iconPosition="left">
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          [(ngModel)]="keyword"
+          (keyup.enter)="loadData()"
+          placeholder="Tìm kiếm..."
+        />
+      </p-iconfield>
+
+      <p-button
+        icon="pi pi-search"
+        class="ml-2"
+        severity="secondary"
+        (onClick)="loadData()"
+      />
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    [value]="items"
+    [(selection)]="selectedItems"
+    dataKey="id"
+    selectionMode="multiple"
+    [rowHover]="true"
+  >
+    <ng-template #header>
+      <tr>
+        <th style="width:3rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th pSortableColumn="ten">
+          Tên danh mục
+          <p-sortIcon field="ten" />
+        </th>
+        <th pSortableColumn="slug">
+          Slug
+          <p-sortIcon field="slug" />
+        </th>
+        <th pSortableColumn="trangThai">
+          Trạng thái
+          <p-sortIcon field="trangThai" />
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-row>
+      <tr [pSelectableRow]="row">
+        <td>
+          <p-tableCheckbox [value]="row" />
+        </td>
+        <td>{{ row.ten }}</td>
+        <td>{{ row.slug }}</td>
+        <td>
+          <p-tag
+            [value]="row.trangThai ? 'Hiển thị' : 'Ẩn'"
+            [severity]="row.trangThai ? 'success' : 'secondary'"
+            [rounded]="true"
+          />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #summary>
+      <div class="py-3">
+        Tổng số bản ghi: {{ totalCount }}
+      </div>
+    </ng-template>
+  </p-table>
+
+  <p-paginator
+    [rows]="maxResultCount"
+    [totalRecords]="totalCount"
+    [rowsPerPageOptions]="[10,20,30,50,100]"
+    (onPageChange)="pageChanged($event)"
+    [showCurrentPageReport]="true"
+  />
+
+  <p-blockui [blocked]="blockedPanel" [target]="dt">
+    <p-progress-spinner style="top:37%" />
+  </p-blockui>
+</p-panel>

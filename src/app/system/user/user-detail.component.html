@@ -1,0 +1,74 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnlDetail header="Thông tin tài khoản">
+    <!-- Form Body -->
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Tài khoản -->
+          <div>
+            <label for="userName" class="block font-bold mb-2">Tài khoản <span class="text-red-500">*</span></label>
+            <input id="userName" type="text" pInputText formControlName="userName" class="w-full" />
+            <app-validation-message [entityForm]="form" fieldName="userName" [validationMessages]="validationMessages" />
+          </div>
+
+          <!-- Mật khẩu (chỉ hiển thị khi tạo mới) -->
+          <div *ngIf="!config.data?.id">
+            <label for="password" class="block font-bold mb-2">Mật khẩu <span class="text-red-500">*</span></label>
+            <input id="password" type="password" pInputText formControlName="password" class="w-full" />
+            <app-validation-message [entityForm]="form" fieldName="password" [validationMessages]="validationMessages" />
+          </div>
+
+          <!-- Họ -->
+          <div>
+            <label for="surname" class="block font-bold mb-2">Họ <span class="text-red-500">*</span></label>
+            <input id="surname" type="text" pInputText formControlName="surname" class="w-full" />
+            <app-validation-message [entityForm]="form" fieldName="surname" [validationMessages]="validationMessages" />
+          </div>
+
+          <!-- Tên -->
+          <div>
+            <label for="name" class="block font-bold mb-2">Tên <span class="text-red-500">*</span></label>
+            <input id="name" type="text" pInputText formControlName="name" class="w-full" />
+            <app-validation-message [entityForm]="form" fieldName="name" [validationMessages]="validationMessages" />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block font-bold mb-2">Email <span class="text-red-500">*</span></label>
+            <input id="email" type="email" pInputText formControlName="email" class="w-full" />
+            <app-validation-message [entityForm]="form" fieldName="email" [validationMessages]="validationMessages" />
+          </div>
+
+          <!-- Số điện thoại -->
+          <div>
+            <label for="phoneNumber" class="block font-bold mb-2">Số điện thoại</label>
+            <input id="phoneNumber" type="text" pInputText formControlName="phoneNumber" class="w-full" />
+            <app-validation-message [entityForm]="form" fieldName="phoneNumber" [validationMessages]="validationMessages" />
+          </div>
+          <!-- Cách dùng switch thay vì select -->
+          <div class="flex items-center gap-3">
+            <label class="font-bold">Trạng thái tài khoản:</label>
+            <p-toggleswitch formControlName="status" />
+            <span class="ml-2">{{ form.value.status ? 'Đang hoạt động' : 'Không hoạt động' }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button label="Hủy" icon="pi pi-times" severity="secondary" [outlined]="true" [rounded]="true" (onClick)="cancel()" class="mr-2" />
+          <p-button type="submit" label="Lưu lại" icon="pi pi-check" [disabled]="!form.valid || btnDisabled" [loading]="btnDisabled" />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <!-- Block UI -->
+    <p-blockUI [blocked]="blockedPanelDetail" [target]="pnlDetail">
+      <p-progressSpinner style="top: 37%;" />
+    </p-blockUI>
+  </p-panel>
+</form>

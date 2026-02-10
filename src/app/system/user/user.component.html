@@ -1,0 +1,156 @@
+<p-panel header="Quản lý người dùng" #dt>
+  <!-- Toolbar -->
+  <p-toolbar class="mb-4">
+    <ng-template #start>
+      <p-button
+        label="Thêm"
+        icon="pi pi-plus"
+        severity="secondary"
+        class="mr-2"
+        (onClick)="showAddModal()"
+      ></p-button>
+
+      <p-button
+        label="Sửa"
+        icon="pi pi-pencil"
+        severity="help"
+        class="mr-2"
+        [disabled]="selectedItems.length !== 1"
+        (onClick)="showEditModal()"
+      ></p-button>
+
+      <p-button
+        label="Xóa"
+        icon="pi pi-trash"
+        severity="danger"
+        [disabled]="selectedItems.length === 0"
+        (onClick)="deleteItems()"
+      ></p-button>
+    </ng-template>
+
+    <ng-template #end>
+      <p-iconfield iconPosition="left">
+        <p-inputicon styleClass="pi pi-search"></p-inputicon>
+        <input
+          #searchInput
+          pInputText
+          type="text"
+          [(ngModel)]="keyword"
+          (keyup.enter)="loadData()"
+          placeholder="Nhập từ khóa..."
+          class="w-full"
+        />
+      </p-iconfield>
+
+      <p-button
+        icon="pi pi-search"
+        severity="secondary"
+        class="ml-2"
+        (onClick)="loadData()"
+      ></p-button>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Table -->
+  <p-table
+    #pnl
+    [value]="items"
+    [(selection)]="selectedItems"
+    selectionMode="multiple"
+    dataKey="id"
+    [rowHover]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    scrollable="true"
+    scrollHeight="400px"
+  >
+    <ng-template #header>
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th style="min-width: 14rem">Tên</th>
+        <th style="min-width: 16rem">Tài khoản</th>
+        <th style="min-width: 16rem">Email</th>
+        <th style="min-width: 12rem">Số ĐT</th>
+        <th style="min-width: 14rem">Ngày tham gia</th>
+        <th style="width: 150px">Trạng thái</th>
+        <th style="min-width: 10rem">Thao tác</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-row>
+      <tr [pSelectableRow]="row">
+        <td>
+          <p-tableCheckbox [value]="row"></p-tableCheckbox>
+        </td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.userName }}</td>
+        <td>{{ row.email }}</td>
+        <td>{{ row.phoneNumber }}</td>
+        <td>{{ row.creationTime | date : 'dd-MM-yyyy hh:mm' }}</td>
+        <td>
+          <p-badge
+            *ngIf="row.status === true"
+            value="Đang hoạt động"
+            severity="success"
+          ></p-badge>
+          <p-badge
+            *ngIf="row.status === false"
+            value="Không hoạt động"
+            severity="danger"
+          ></p-badge>
+        </td>
+        <td>
+          <p-button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-key"
+            pTooltip="Đặt mật khẩu"
+            tooltipPosition="top"
+            class="p-button-rounded p-button-text mr-2"
+            (click)="setPassword(row.id)"
+          ></p-button>
+
+          <p-button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-users"
+            pTooltip="Gán vai trò"
+            tooltipPosition="top"
+            class="p-button-rounded p-button-text"
+            (click)="assignRole(row.id)"
+          ></p-button>
+        </td>
+        <ng-template pTemplate="emptymessage">
+          <div class="text-center p-6 text-500">
+            <i class="pi pi-info-circle text-4xl"></i>
+            <p class="mt-3">Không tìm thấy người dùng nào phù hợp</p>
+          </div>
+        </ng-template>
+      </tr>
+    </ng-template>
+
+    <ng-template #summary>
+      <div style="padding: 1rem 0;">
+        Tổng số bản ghi: {{ totalCount | number }}
+      </div>
+    </ng-template>
+  </p-table>
+
+  <!-- Paginator -->
+  <p-paginator
+    [rows]="maxResultCount"
+    [totalRecords]="totalCount"
+    (onPageChange)="pageChanged($event)"
+    [rowsPerPageOptions]="[10, 20, 30, 50, 100]"
+    [showPageLinks]="true"
+    [showCurrentPageReport]="true"
+  ></p-paginator>
+
+  <!-- Block UI -->
+  <p-blockUI [blocked]="blockedPanel" [target]="dt">
+    <p-progressSpinner style="top: 37%;"></p-progressSpinner>
+  </p-blockUI>
+</p-panel>

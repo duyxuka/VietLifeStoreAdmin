@@ -1,0 +1,104 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnl header="Chi tiết banner">
+
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+
+        <!-- Tiêu đề -->
+        <div>
+          <label class="font-bold mb-2 block">
+            Tiêu đề <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="tieuDe"
+            placeholder="Nhập tiêu đề banner"
+            fluid />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="tieuDe"
+            [validationMessages]="validationMessages" />
+        </div>
+
+        <!-- Mô tả -->
+        <div>
+          <label class="font-bold mb-2 block">Mô tả</label>
+          <textarea
+            pInputTextarea
+            rows="3"
+            formControlName="moTa">
+          </textarea>
+        </div>
+
+        <!-- Link -->
+        <div>
+          <label class="font-bold mb-2 block">Liên kết</label>
+          <input
+            pInputText
+            formControlName="lienKet"
+            placeholder="https://example.com"
+            fluid />
+        </div>
+
+        <!-- Ảnh banner -->
+        <div>
+          <label class="font-bold mb-2 block">
+            Ảnh banner <span class="text-red-500">*</span>
+          </label>
+
+          <p-fileUpload
+            mode="basic"
+            name="file"
+            accept="image/*"
+            chooseLabel="Chọn ảnh"
+            [auto]="false"
+            customUpload="true"
+            (onSelect)="onSelectImage($event)"
+            [maxFileSize]="204800"
+            class="w-full"
+          ></p-fileUpload>
+
+          @if (bannerImage) {
+            <img
+              [src]="bannerImage"
+              class="mt-3 border rounded w-64"
+            />
+          }
+        </div>
+
+        <!-- Trạng thái -->
+        <div class="flex items-center gap-2">
+          <p-toggleswitch formControlName="trangThai"></p-toggleswitch>
+          <label>Hiển thị</label>
+        </div>
+
+      </div>
+    </ng-template>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            (onClick)="cancel()" 
+            class="mr-2"/>
+          <p-button
+            type="submit"
+            label="Lưu lại"
+            icon="pi pi-check"
+            [disabled]="!form.valid || btnDisabled"
+            [loading]="btnDisabled" />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <p-blockui [blocked]="blockedPanel" [target]="pnl">
+      <p-progress-spinner />
+    </p-blockui>
+
+  </p-panel>
+</form>
