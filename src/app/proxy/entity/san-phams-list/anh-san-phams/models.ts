@@ -10,6 +10,4 @@ export interface CreateUpdateAnhSanPhamDto {
   anh?: string;
   status: boolean;
   sanPhamId?: string;
-  anhName?: string;
-  anhContent?: string;
 }

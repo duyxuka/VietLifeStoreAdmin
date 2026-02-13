@@ -1,7 +1,7 @@
 import type { SanPhamBienTheThuocTinhDto } from '../san-pham-bien-the-thuoc-tinhs/models';
 
 export interface CreateUpdateSanPhamBienTheDto {
-  sanPhamId?: string;
+  id?: string;
   gia: number;
   ten?: string;
   giaKhuyenMai?: number;

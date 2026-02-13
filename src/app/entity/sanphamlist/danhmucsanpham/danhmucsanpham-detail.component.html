@@ -30,33 +30,51 @@
             fluid />
         </div>
 
-        <!-- Thumbnail -->
+        <!-- ✅ Thumbnail -->
         <div>
           <label class="font-bold mb-2 block">Ảnh thumbnail</label>
-          <input type="file" (change)="onThumbnailChange($event)" />
-        </div>
+          <p-fileUpload
+            mode="basic"
+            name="thumbnail"
+            accept="image/*"
+            chooseLabel="Chọn thumbnail"
+            [auto]="false"
+            [customUpload]="true"
+            (onSelect)="onThumbnailSelect($event)"
+            [maxFileSize]="307200"
+            class="w-full">
+          </p-fileUpload>
 
-        @if (thumbnailImage) {
-          <p-image
-            [src]="thumbnailImage"
-            width="250"
-            [preview]="true">
-          </p-image>
-        }
+          @if (thumbnailPreview) {
+            <img
+              [src]="thumbnailPreview"
+              class="mt-3 border rounded w-64"
+              alt="Thumbnail preview" />
+          }
+        </div>
         
-        <!-- Banner -->
+        <!-- ✅ Banner -->
         <div>
           <label class="font-bold mb-2 block">Ảnh banner</label>
-          <input type="file" (change)="onBannerChange($event)" />
-        </div>
+          <p-fileUpload
+            mode="basic"
+            name="banner"
+            accept="image/*"
+            chooseLabel="Chọn banner"
+            [auto]="false"
+            [customUpload]="true"
+            (onSelect)="onBannerSelect($event)"
+            [maxFileSize]="307200"
+            class="w-full">
+          </p-fileUpload>
 
-        @if (bannerImage) {
-          <p-image
-            [src]="bannerImage"
-            width="400"
-            [preview]="true">
-          </p-image>
-        }
+          @if (bannerPreview) {
+            <img
+              [src]="bannerPreview"
+              class="mt-3 border rounded w-full max-w-2xl"
+              alt="Banner preview" />
+          }
+        </div>
 
         <!-- SEO -->
         <div>
@@ -71,13 +89,18 @@
 
         <div>
           <label class="font-bold mb-2 block">Description SEO</label>
-          <textarea pInputTextarea formControlName="descriptionSEO"></textarea>
+          <textarea 
+            pInputTextarea 
+            formControlName="descriptionSEO"
+            rows="3"
+            fluid>
+          </textarea>
         </div>
 
         <!-- Trạng thái -->
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
+          <label class="font-bold">Trạng thái</label>
           <p-toggleswitch formControlName="trangThai"></p-toggleswitch>
-          <label>Hiển thị</label>
         </div>
 
       </div>

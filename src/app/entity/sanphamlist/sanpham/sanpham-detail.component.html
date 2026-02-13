@@ -52,6 +52,9 @@
           @if (anhDaiDienPreview) {
             <p-image [src]="anhDaiDienPreview" width="300" [preview]="true" />
           }
+          @if (hasExistingProduct && anhDaiDienPreview) {
+            <button pButton label="Xóa ảnh đại diện" severity="danger" (click)="xoaAnhDaiDien()"></button>
+          }
         </div>
 
         <!-- Ảnh phụ -->
@@ -287,7 +290,7 @@
       </p-toolbar>
     </ng-template>
     <p-blockui [blocked]="blockedPanel" [target]="pnl">
-      <p-progress-spinner style="top: 13%;" />
+      <p-progressSpinner style="top: 13%;" />
     </p-blockui>
   </p-panel>
 </form>

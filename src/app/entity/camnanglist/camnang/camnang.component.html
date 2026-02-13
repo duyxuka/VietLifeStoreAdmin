@@ -59,7 +59,6 @@
         <th style="width:3rem">
           <p-tableHeaderCheckbox />
         </th>
-
         <th style="min-width:8rem">Ảnh</th>
         <th style="min-width:20rem">Tên cẩm nang</th>
         <th style="min-width:15rem">Danh mục</th>
@@ -73,15 +72,20 @@
         <td>
           <p-tableCheckbox [value]="row" />
         </td>
-
-        <!-- Thumbnail -->
         <td>
           @if (row.anh) {
-          <p-image
-            [src]="getThumbnail(row.anh)"
-            width="80"
-            height="80"
-            [preview]="true" />
+            <p-image
+              [src]="getImageUrl(row.anh)"
+              alt="Cẩm nang"
+              width="80"
+              height="80"
+              [preview]="true"/>
+          }
+          @else {
+            <div 
+              style="width: 80px; height: 80px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #999;">
+              <i class="pi pi-image" style="font-size: 2rem;"></i>
+            </div>
           }
         </td>
 

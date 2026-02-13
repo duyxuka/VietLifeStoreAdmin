@@ -66,7 +66,7 @@ export class ThuocTinhsService {
     this.restService.request<any, PagedResultDto<ThuocTinhInListDto>>({
       method: 'GET',
       url: '/api/app/thuoc-tinhs/filter',
-      params: { keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

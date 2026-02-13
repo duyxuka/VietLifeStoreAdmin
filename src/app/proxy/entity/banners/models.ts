@@ -15,8 +15,6 @@ export interface BannerInListDto extends EntityDto<string> {
   anh?: string;
   lienKet?: string;
   trangThai: boolean;
-  anhName?: string;
-  anhContent?: string;
 }
 
 export interface CreateUpdateBannerDto {
@@ -25,6 +23,4 @@ export interface CreateUpdateBannerDto {
   anh?: string;
   lienKet?: string;
   trangThai: boolean;
-  anhName?: string;
-  anhContent?: string;
 }

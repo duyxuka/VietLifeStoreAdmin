@@ -45,12 +45,11 @@ export class CamNangsService {
     { apiName: this.apiName,...config });
   
 
-  getImage = (fileName: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
+  getLatestCamNangHome = (take: number = 4, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, CamNangInListDto[]>({
       method: 'GET',
-      responseType: 'text',
-      url: '/api/app/cam-nangs/image',
-      params: { fileName },
+      url: '/api/app/cam-nangs/latest-cam-nang-home',
+      params: { take },
     },
     { apiName: this.apiName,...config });
   
@@ -76,7 +75,7 @@ export class CamNangsService {
     this.restService.request<any, PagedResultDto<CamNangInListDto>>({
       method: 'GET',
       url: '/api/app/cam-nangs/filter',
-      params: { keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

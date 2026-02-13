@@ -66,7 +66,7 @@ export class VouchersService {
     this.restService.request<any, PagedResultDto<VoucherInListDto>>({
       method: 'GET',
       url: '/api/app/vouchers/filter',
-      params: { keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

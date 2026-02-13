@@ -20,6 +20,7 @@ export interface CamNangInListDto extends EntityDto<string> {
   anh?: string;
   danhMucCamNangId?: string;
   trangThai: boolean;
+  creationTime?: string;
 }
 
 export interface CreateUpdateCamNangDto {
@@ -32,6 +33,4 @@ export interface CreateUpdateCamNangDto {
   titleSEO?: string;
   keyword?: string;
   descriptionSEO?: string;
-  anhName?: string;
-  anhContent?: string;
 }

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { PagedResultDto } from '@abp/ng.core';
 
@@ -10,6 +9,7 @@ import { DanhMucSanPhamInListDto } from '@/proxy/entity/san-phams-list/danh-muc-
 import { NotificationService } from '@/shared/services/notification.service';
 import { StandaloneSharedModule } from '@/standaloneshare.module';
 import { DanhmucsanphamDetailComponent } from './danhmucsanpham-detail.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-danhmucsanpham',
@@ -30,15 +30,14 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
   maxResultCount = 10;
   totalCount = 0;
 
-  thumbnailCache: { [key: string]: any } = {};
+  mediaBaseUrl = environment.apis.default.url + '/files/';
 
   constructor(
     private service: DanhMucSanPhamsService,
     private dialogService: DialogService,
     private notification: NotificationService,
-    private confirmation: ConfirmationService,
-    private sanitizer: DomSanitizer
-  ) {}
+    private confirmation: ConfirmationService
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -49,6 +48,8 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
+  // ================= LOAD DATA =================
+
   loadData() {
     this.toggleBlockUI(true);
 
@@ -57,15 +58,25 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
       skipCount: this.skipCount,
       maxResultCount: this.maxResultCount
     })
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next: (res: PagedResultDto<DanhMucSanPhamInListDto>) => {
-        this.items = res.items;
-        this.totalCount = res.totalCount;
-        this.toggleBlockUI(false);
-      },
-      error: () => this.toggleBlockUI(false)
-    });
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res: PagedResultDto<DanhMucSanPhamInListDto>) => {
+          this.items = res.items;
+          this.totalCount = res.totalCount;
+          this.toggleBlockUI(false);
+        },
+        error: (err) => {
+          this.notification.showError(
+            err?.error?.error?.message || 'Không thể tải dữ liệu'
+          );
+          this.toggleBlockUI(false);
+        }
+      });
+  }
+
+  // ✅ Simple helper để tạo full URL
+  getImageUrl(fileName: string): string {
+    return fileName ? this.mediaBaseUrl + fileName : '';
   }
 
   pageChanged(event: any) {
@@ -73,6 +84,8 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
     this.maxResultCount = event.rows;
     this.loadData();
   }
+
+  // ================= MODAL =================
 
   showAddModal() {
     const ref = this.dialogService.open(DanhmucsanphamDetailComponent, {
@@ -84,16 +97,19 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
     });
 
     ref.onClose.subscribe(data => {
-      if (data) {
-        this.notification.showSuccess('Thêm thành công');
-        this.loadData();
-        this.selectedItems = [];
-      }
+      if (!data) return;
+
+      this.notification.showSuccess('Thêm thành công');
+      this.selectedItems = [];
+      this.loadData();
     });
   }
 
   showEditModal() {
+    if (!this.selectedItems.length) return;
+
     const id = this.selectedItems[0].id;
+
     const ref = this.dialogService.open(DanhmucsanphamDetailComponent, {
       data: { id },
       header: 'Cập nhật danh mục sản phẩm',
@@ -104,15 +120,19 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
     });
 
     ref.onClose.subscribe(data => {
-      if (data) {
-        this.notification.showSuccess('Cập nhật thành công');
-        this.loadData();
-        this.selectedItems = [];
-      }
+      if (!data) return;
+
+      this.notification.showSuccess('Cập nhật thành công');
+      this.selectedItems = [];
+      this.loadData();
     });
   }
 
+  // ================= DELETE =================
+
   deleteItems() {
+    if (!this.selectedItems.length) return;
+
     const ids = this.selectedItems.map(x => x.id);
 
     this.confirmation.confirm({
@@ -121,7 +141,7 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteConfirmed(ids: string[]) {
+  private deleteConfirmed(ids: string[]) {
     this.toggleBlockUI(true);
 
     this.service.deleteMultiple(ids)
@@ -129,33 +149,28 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.notification.showSuccess('Xóa thành công');
-          this.loadData();
           this.selectedItems = [];
-          this.toggleBlockUI(false);
+          this.loadData();
         },
-        error: () => this.toggleBlockUI(false)
+        error: (err) => {
+          this.notification.showError(
+            err?.error?.error?.message || 'Xóa thất bại'
+          );
+          this.toggleBlockUI(false);
+        }
       });
   }
 
-  getThumbnail(fileName: string) {
-    if (!fileName) return null;
+  // ================= UI =================
 
-    if (this.thumbnailCache[fileName]) {
-      return this.thumbnailCache[fileName];
+  private toggleBlockUI(enabled: boolean) {
+    if (enabled) {
+      this.blockedPanel = true;
+    } else {
+      // delay nhỏ tránh flicker
+      setTimeout(() => {
+        this.blockedPanel = false;
+      }, 300);
     }
-
-    this.service.getImage(fileName).subscribe(res => {
-      const ext = fileName.split('.').pop();
-      this.thumbnailCache[fileName] =
-        this.sanitizer.bypassSecurityTrustResourceUrl(
-          `data:image/${ext};base64, ${res}`
-        );
-    });
-
-    return this.thumbnailCache[fileName];
-  }
-
-  toggleBlockUI(enabled: boolean) {
-    this.blockedPanel = enabled;
   }
 }

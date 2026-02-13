@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { PagedResultDto } from '@abp/ng.core';
+
 import { NotificationService } from '@/shared/services/notification.service';
 import { StandaloneSharedModule } from '@/standaloneshare.module';
 import { SanphamDetailComponent } from './sanpham-detail.component';
 import { SanPhamInListDto } from '@/proxy/entity/san-phams-list/san-phams';
 import { SanPhamsService } from '@/proxy/entity/san-phams';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sanpham',
@@ -30,14 +31,13 @@ export class SanphamComponent implements OnInit, OnDestroy {
   maxResultCount = 10;
   totalCount = 0;
 
-  thumbnailCache: { [key: string]: any } = {};
+  mediaBaseUrl = environment.apis.default.url + '/files/';
 
   constructor(
     private service: SanPhamsService,
     private dialogService: DialogService,
     private notification: NotificationService,
-    private confirmation: ConfirmationService,
-    private sanitizer: DomSanitizer
+    private confirmation: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +48,8 @@ export class SanphamComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+
+  // ================= LOAD DATA =================
 
   loadData() {
     this.toggleBlockUI(true);
@@ -68,11 +70,18 @@ export class SanphamComponent implements OnInit, OnDestroy {
     });
   }
 
+  // ✅ Simple helper để tạo full URL
+  getImageUrl(fileName: string): string {
+    return fileName ? this.mediaBaseUrl + fileName : '';
+  }
+
   pageChanged(e: any) {
     this.skipCount = e.first;
     this.maxResultCount = e.rows;
     this.loadData();
   }
+
+  // ================= MODAL =================
 
   showAddModal() {
     const ref = this.dialogService.open(SanphamDetailComponent, {
@@ -93,7 +102,10 @@ export class SanphamComponent implements OnInit, OnDestroy {
   }
 
   showEditModal() {
+    if (!this.selectedItems.length) return;
+
     const id = this.selectedItems[0].id;
+
     const ref = this.dialogService.open(SanphamDetailComponent, {
       data: { id },
       header: 'Cập nhật sản phẩm',
@@ -111,6 +123,8 @@ export class SanphamComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  // ================= DELETE =================
 
   deleteItems() {
     const ids = this.selectedItems.map(x => x.id);
@@ -137,29 +151,9 @@ export class SanphamComponent implements OnInit, OnDestroy {
       });
   }
 
-  getThumbnail(fileName: string) {
-    if (!fileName) return null;
+  // ================= UI =================
 
-    if (this.thumbnailCache[fileName]) {
-      return this.thumbnailCache[fileName];
-    }
-
-    this.service.getThumbnail(fileName).subscribe(res => {
-      const ext = fileName.split('.').pop();
-      this.thumbnailCache[fileName] =
-        this.sanitizer.bypassSecurityTrustResourceUrl(
-          `data:image/${ext};base64, ${res}`
-        );
-    });
-
-    return this.thumbnailCache[fileName];
-  }
-
-  private toggleBlockUI(enabled: boolean) {
-    if (enabled) {
-      this.blockedPanel = true;
-    } else {
-      setTimeout(() => this.blockedPanel = false, 1000);
-    }
+  toggleBlockUI(enabled: boolean) {
+    this.blockedPanel = enabled;
   }
 }

@@ -33,9 +33,9 @@
           pInputText
           [(ngModel)]="keyword"
           (keyup.enter)="loadData()"
-          placeholder="Tìm theo tên / slug..."
-        />
+          placeholder="Tìm theo tên / slug..." />
       </p-iconfield>
+      
       <p-button
         icon="pi pi-search"
         class="ml-2"
@@ -58,7 +58,6 @@
         <th style="width:3rem">
           <p-tableHeaderCheckbox />
         </th>
-
         <th style="min-width: 8rem">Ảnh</th>
         <th style="min-width: 18rem">Tên sản phẩm</th>
         <th style="min-width: 12rem">Giá</th>
@@ -73,14 +72,22 @@
           <p-tableCheckbox [value]="row" />
         </td>
 
-        <!-- Avatar -->
+        <!-- ✅ Avatar - Dùng static URL -->
         <td>
           @if (row.anh) {
             <p-image
-              [src]="getThumbnail(row.anh)"
+              [src]="getImageUrl(row.anh)"
+              alt="Sản phẩm"
               width="80"
               height="80"
-              [preview]="true" />
+              [preview]="true"
+              style="object-fit: cover; border-radius: 4px;" />
+          }
+          @else {
+            <div 
+              style="width: 80px; height: 80px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #999;">
+              <i class="pi pi-image" style="font-size: 2rem;"></i>
+            </div>
           }
         </td>
 
@@ -95,10 +102,12 @@
 
         <td>
           @if (row.giaKhuyenMai) {
-            {{ row.giaKhuyenMai | number }} đ
+            <span class="text-red-500 font-semibold">
+              {{ row.giaKhuyenMai | number }} đ
+            </span>
           }
           @else {
-            —
+            <span class="text-gray-400">—</span>
           }
         </td>
 

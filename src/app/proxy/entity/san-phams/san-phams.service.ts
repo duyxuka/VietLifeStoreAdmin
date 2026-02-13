@@ -45,20 +45,20 @@ export class SanPhamsService {
     { apiName: this.apiName,...config });
   
 
-  getByDanhMuc = (danhMucId: string, config?: Partial<Rest.Config>) =>
+  getByDanhMuc = (slug: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, SanPhamInListDto[]>({
       method: 'GET',
-      url: `/api/app/san-phams/by-danh-muc/${danhMucId}`,
+      url: '/api/app/san-phams/by-danh-muc',
+      params: { slug },
     },
     { apiName: this.apiName,...config });
   
 
-  getImage = (fileName: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
+  getBySlug = (slug: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SanPhamDto>({
       method: 'GET',
-      responseType: 'text',
-      url: '/api/app/san-phams/image',
-      params: { fileName },
+      url: '/api/app/san-phams/by-slug',
+      params: { slug },
     },
     { apiName: this.apiName,...config });
   
@@ -84,17 +84,16 @@ export class SanPhamsService {
     this.restService.request<any, PagedResultDto<SanPhamInListDto>>({
       method: 'GET',
       url: '/api/app/san-phams/filter',
-      params: { keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
 
-  getThumbnail = (fileName: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
+  getTopBanChay = (top: number = 6, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SanPhamInListDto[]>({
       method: 'GET',
-      responseType: 'text',
-      url: '/api/app/san-phams/thumbnail',
-      params: { fileName },
+      url: '/api/app/san-phams/top-ban-chay',
+      params: { top },
     },
     { apiName: this.apiName,...config });
   

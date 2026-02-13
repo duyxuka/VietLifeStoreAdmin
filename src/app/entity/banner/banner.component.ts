@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { PagedResultDto } from '@abp/ng.core';
 
@@ -10,6 +9,7 @@ import { BannerInListDto } from '@/proxy/entity/banners';
 import { NotificationService } from '@/shared/services/notification.service';
 import { StandaloneSharedModule } from '@/standaloneshare.module';
 import { BannerDetailComponent } from './banner-detail.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-banner',
@@ -30,14 +30,13 @@ export class BannerComponent implements OnInit, OnDestroy {
   maxResultCount = 10;
   totalCount = 0;
 
-  imageCache: { [key: string]: any } = {};
+  mediaBaseUrl = environment.apis.default.url + '/files/';
 
   constructor(
     private service: BannersService,
     private dialogService: DialogService,
     private notification: NotificationService,
-    private confirmation: ConfirmationService,
-    private sanitizer: DomSanitizer
+    private confirmation: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +47,8 @@ export class BannerComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+
+  // ================= LOAD DATA =================
 
   loadData() {
     this.toggleBlockUI(true);
@@ -68,11 +69,18 @@ export class BannerComponent implements OnInit, OnDestroy {
     });
   }
 
+  // ✅ Simple helper để tạo full URL
+  getImageUrl(fileName: string): string {
+    return fileName ? this.mediaBaseUrl + fileName : '';
+  }
+
   pageChanged(event: any) {
     this.skipCount = event.first;
     this.maxResultCount = event.rows;
     this.loadData();
   }
+
+  // ================= MODAL =================
 
   showAddModal() {
     const ref = this.dialogService.open(BannerDetailComponent, {
@@ -93,6 +101,8 @@ export class BannerComponent implements OnInit, OnDestroy {
   }
 
   showEditModal() {
+    if (!this.selectedItems.length) return;
+
     const id = this.selectedItems[0].id;
 
     const ref = this.dialogService.open(BannerDetailComponent, {
@@ -112,6 +122,8 @@ export class BannerComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  // ================= DELETE =================
 
   deleteItems() {
     const ids = this.selectedItems.map(x => x.id);
@@ -136,24 +148,6 @@ export class BannerComponent implements OnInit, OnDestroy {
         },
         error: () => this.toggleBlockUI(false)
       });
-  }
-
-  getImage(fileName: string) {
-    if (!fileName) return null;
-
-    if (this.imageCache[fileName]) {
-      return this.imageCache[fileName];
-    }
-
-    this.service.getImage(fileName).subscribe(res => {
-      const ext = fileName.split('.').pop();
-      this.imageCache[fileName] =
-        this.sanitizer.bypassSecurityTrustResourceUrl(
-          `data:image/${ext};base64,${res}`
-        );
-    });
-
-    return this.imageCache[fileName];
   }
 
   toggleBlockUI(enabled: boolean) {

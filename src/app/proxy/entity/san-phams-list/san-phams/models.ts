@@ -2,11 +2,6 @@ import type { CreateUpdateThuocTinhWithGiaTriDto, ThuocTinhDto } from '../thuoc-
 import type { CreateUpdateSanPhamBienTheDto, SanPhamBienTheDto } from '../san-pham-bien-thes/models';
 import type { EntityDto } from '@abp/ng.core';
 
-export interface AnhUploadDto {
-  fileName?: string;
-  base64?: string;
-}
-
 export interface CreateUpdateSanPhamDto {
   ten?: string;
   slug?: string;
@@ -32,10 +27,9 @@ export interface CreateUpdateSanPhamDto {
   thoiHanKetThuc?: string;
   thuocTinhs: CreateUpdateThuocTinhWithGiaTriDto[];
   bienThes: CreateUpdateSanPhamBienTheDto[];
-  anhDaiDienName?: string;
-  anhDaiDienContent?: string;
-  anhPhu: AnhUploadDto[];
+  anhPhu: string[];
   anhPhuGiuLai: string[];
+  phanTramKhuyenMai?: number;
 }
 
 export interface SanPhamDto {
@@ -62,6 +56,7 @@ export interface SanPhamDto {
   laDatLich: boolean;
   thoiHanBatDau?: string;
   thoiHanKetThuc?: string;
+  phanTramGiamGia?: number;
   thuocTinhs: ThuocTinhDto[];
   anhPhu: string[];
   bienThes: SanPhamBienTheDto[];
@@ -73,9 +68,12 @@ export interface SanPhamInListDto extends EntityDto<string> {
   giaKhuyenMai: number;
   danhMucId?: string;
   anh?: string;
+  slug?: string;
+  moTaNgan?: string;
   trangThai: boolean;
   laDatLich: boolean;
   thoiHanBatDau?: string;
   thoiHanKetThuc?: string;
-  anhDaiDienContent?: string;
+  phanTramGiamGia?: number;
+  soLuongDaBan?: number;
 }

@@ -45,16 +45,6 @@ export class DanhMucSanPhamsService {
     { apiName: this.apiName,...config });
   
 
-  getImage = (fileName: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
-      method: 'GET',
-      responseType: 'text',
-      url: '/api/app/danh-muc-san-phams/image',
-      params: { fileName },
-    },
-    { apiName: this.apiName,...config });
-  
-
   getList = (input: PagedResultRequestDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<DanhMucSanPhamDto>>({
       method: 'GET',
@@ -76,7 +66,7 @@ export class DanhMucSanPhamsService {
     this.restService.request<any, PagedResultDto<DanhMucSanPhamInListDto>>({
       method: 'GET',
       url: '/api/app/danh-muc-san-phams/filter',
-      params: { keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

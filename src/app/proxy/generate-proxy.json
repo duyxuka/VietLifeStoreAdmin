@@ -1118,6 +1118,43 @@
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<VietlifeStore.Entity.Banners.BannerDto,System.Guid,VietlifeStore.Entity.Banners.CreateUpdateBannerDto>"
             },
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/banners/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+            },
             "DeleteMultipleAsyncByIds": {
               "uniqueName": "DeleteMultipleAsyncByIds",
               "name": "DeleteMultipleAsync",
@@ -1167,7 +1204,7 @@
                 "type": "System.Collections.Generic.List<VietlifeStore.Entity.Banners.BannerInListDto>",
                 "typeSimple": "[VietlifeStore.Entity.Banners.BannerInListDto]"
               },
-              "allowAnonymous": true,
+              "allowAnonymous": null,
               "implementFrom": "VietlifeStore.Entity.Banners.IBannersAppService"
             },
             "GetListFilterAsyncByInput": {
@@ -1190,6 +1227,30 @@
                 {
                   "nameOnMethod": "input",
                   "name": "Keyword",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -1228,82 +1289,8 @@
                 "type": "Volo.Abp.Application.Dtos.PagedResultDto<VietlifeStore.Entity.Banners.BannerInListDto>",
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<VietlifeStore.Entity.Banners.BannerInListDto>"
               },
-              "allowAnonymous": false,
+              "allowAnonymous": null,
               "implementFrom": "VietlifeStore.Entity.Banners.IBannersAppService"
-            },
-            "GetImageAsyncByFileName": {
-              "uniqueName": "GetImageAsyncByFileName",
-              "name": "GetImageAsync",
-              "httpMethod": "GET",
-              "url": "api/app/banners/image",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "fileName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "fileName",
-                  "name": "fileName",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.String",
-                "typeSimple": "string"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "VietlifeStore.Entity.Banners.BannersAppService"
-            },
-            "DeleteAsyncById": {
-              "uniqueName": "DeleteAsyncById",
-              "name": "DeleteAsync",
-              "httpMethod": "DELETE",
-              "url": "api/app/banners/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
             },
             "GetAsyncById": {
               "uniqueName": "GetAsyncById",
@@ -1721,6 +1708,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -1931,6 +1942,23 @@
                   }
                 },
                 {
+                  "name": "GetLatestCamNangHomeAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "take",
+                      "typeAsString": "System.Int32, System.Private.CoreLib",
+                      "type": "System.Int32",
+                      "typeSimple": "number",
+                      "isOptional": true,
+                      "defaultValue": 4
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<VietlifeStore.Entity.CamNangsList.CamNangs.CamNangInListDto>",
+                    "typeSimple": "[VietlifeStore.Entity.CamNangsList.CamNangs.CamNangInListDto]"
+                  }
+                },
+                {
                   "name": "GetAsync",
                   "parametersOnMethod": [
                     {
@@ -2121,6 +2149,43 @@
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<VietlifeStore.Entity.CamNangsList.CamNangs.CamNangDto,System.Guid,VietlifeStore.Entity.CamNangsList.CamNangs.CreateUpdateCamNangDto>"
             },
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/cam-nangs/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+            },
             "DeleteMultipleAsyncByIds": {
               "uniqueName": "DeleteMultipleAsyncByIds",
               "name": "DeleteMultipleAsync",
@@ -2204,6 +2269,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -2234,29 +2323,29 @@
               "allowAnonymous": false,
               "implementFrom": "VietlifeStore.Entity.CamNangsList.CamNangs.ICamNangsAppService"
             },
-            "GetImageAsyncByFileName": {
-              "uniqueName": "GetImageAsyncByFileName",
-              "name": "GetImageAsync",
+            "GetLatestCamNangHomeAsyncByTake": {
+              "uniqueName": "GetLatestCamNangHomeAsyncByTake",
+              "name": "GetLatestCamNangHomeAsync",
               "httpMethod": "GET",
-              "url": "api/app/cam-nangs/image",
+              "url": "api/app/cam-nangs/latest-cam-nang-home",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "fileName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
+                  "name": "take",
+                  "typeAsString": "System.Int32, System.Private.CoreLib",
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": true,
+                  "defaultValue": 4
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "fileName",
-                  "name": "fileName",
+                  "nameOnMethod": "take",
+                  "name": "take",
                   "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "type": "System.Int32",
+                  "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -2265,48 +2354,11 @@
                 }
               ],
               "returnValue": {
-                "type": "System.String",
-                "typeSimple": "string"
+                "type": "System.Collections.Generic.List<VietlifeStore.Entity.CamNangsList.CamNangs.CamNangInListDto>",
+                "typeSimple": "[VietlifeStore.Entity.CamNangsList.CamNangs.CamNangInListDto]"
               },
-              "allowAnonymous": null,
-              "implementFrom": "VietlifeStore.Entity.CamNangsList.CamNangs.CamNangsAppService"
-            },
-            "DeleteAsyncById": {
-              "uniqueName": "DeleteAsyncById",
-              "name": "DeleteAsync",
-              "httpMethod": "DELETE",
-              "url": "api/app/cam-nangs/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+              "allowAnonymous": true,
+              "implementFrom": "VietlifeStore.Entity.CamNangsList.CamNangs.ICamNangsAppService"
             },
             "GetAsyncById": {
               "uniqueName": "GetAsyncById",
@@ -2713,6 +2765,30 @@
                 {
                   "nameOnMethod": "input",
                   "name": "Keyword",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -3207,6 +3283,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -3548,6 +3648,30 @@
                 {
                   "nameOnMethod": "input",
                   "name": "Keyword",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -4173,6 +4297,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -4656,6 +4804,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -5004,43 +5176,6 @@
               },
               "allowAnonymous": false,
               "implementFrom": "VietlifeStore.Entity.SanPhams.AnhSanPhamsAppService"
-            },
-            "GetImageAsyncByFileName": {
-              "uniqueName": "GetImageAsyncByFileName",
-              "name": "GetImageAsync",
-              "httpMethod": "GET",
-              "url": "api/app/anh-san-phams/image",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "fileName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "fileName",
-                  "name": "fileName",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.String",
-                "typeSimple": "string"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "VietlifeStore.Entity.SanPhams.AnhSanPhamsAppService"
             }
           }
         },
@@ -5289,6 +5424,43 @@
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<VietlifeStore.Entity.SanPhamsList.DanhMucSanPhams.DanhMucSanPhamDto,System.Guid,VietlifeStore.Entity.SanPhamsList.DanhMucSanPhams.CreateUpdateDanhMucSanPhamDto>"
             },
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/danh-muc-san-phams/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+            },
             "DeleteMultipleAsyncByIds": {
               "uniqueName": "DeleteMultipleAsyncByIds",
               "name": "DeleteMultipleAsync",
@@ -5372,6 +5544,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -5401,80 +5597,6 @@
               },
               "allowAnonymous": false,
               "implementFrom": "VietlifeStore.Entity.SanPhamsList.DanhMucSanPhams.IDanhMucSanPhamsAppService"
-            },
-            "GetImageAsyncByFileName": {
-              "uniqueName": "GetImageAsyncByFileName",
-              "name": "GetImageAsync",
-              "httpMethod": "GET",
-              "url": "api/app/danh-muc-san-phams/image",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "fileName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "fileName",
-                  "name": "fileName",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.String",
-                "typeSimple": "string"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "VietlifeStore.Entity.SanPhams.DanhMucSanPhamsAppService"
-            },
-            "DeleteAsyncById": {
-              "uniqueName": "DeleteAsyncById",
-              "name": "DeleteAsync",
-              "httpMethod": "DELETE",
-              "url": "api/app/danh-muc-san-phams/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
             },
             "GetAsyncById": {
               "uniqueName": "GetAsyncById",
@@ -5787,6 +5909,30 @@
                 {
                   "nameOnMethod": "input",
                   "name": "Keyword",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -6244,6 +6390,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -6585,6 +6755,23 @@
                   }
                 },
                 {
+                  "name": "GetTopBanChayAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "top",
+                      "typeAsString": "System.Int32, System.Private.CoreLib",
+                      "type": "System.Int32",
+                      "typeSimple": "number",
+                      "isOptional": true,
+                      "defaultValue": 6
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamInListDto>",
+                    "typeSimple": "[VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamInListDto]"
+                  }
+                },
+                {
                   "name": "GetAsync",
                   "parametersOnMethod": [
                     {
@@ -6812,17 +6999,17 @@
               "allowAnonymous": null,
               "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamDto,System.Guid,VietlifeStore.Entity.SanPhamsList.SanPhams.CreateUpdateSanPhamDto>"
             },
-            "GetImageAsyncByFileName": {
-              "uniqueName": "GetImageAsyncByFileName",
-              "name": "GetImageAsync",
-              "httpMethod": "GET",
-              "url": "api/app/san-phams/image",
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/san-phams/{id}",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "fileName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
                   "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null
@@ -6830,61 +7017,24 @@
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "fileName",
-                  "name": "fileName",
+                  "nameOnMethod": "id",
+                  "name": "id",
                   "jsonName": null,
-                  "type": "System.String",
+                  "type": "System.Guid",
                   "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
                   "descriptorName": ""
                 }
               ],
               "returnValue": {
-                "type": "System.String",
-                "typeSimple": "string"
+                "type": "System.Void",
+                "typeSimple": "System.Void"
               },
               "allowAnonymous": null,
-              "implementFrom": "VietlifeStore.Entity.SanPhams.SanPhamsAppService"
-            },
-            "GetThumbnailAsyncByFileName": {
-              "uniqueName": "GetThumbnailAsyncByFileName",
-              "name": "GetThumbnailAsync",
-              "httpMethod": "GET",
-              "url": "api/app/san-phams/thumbnail",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "fileName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "fileName",
-                  "name": "fileName",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.String",
-                "typeSimple": "string"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "VietlifeStore.Entity.SanPhams.SanPhamsAppService"
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
             },
             "GetListFilterAsyncByInput": {
               "uniqueName": "GetListFilterAsyncByInput",
@@ -6906,6 +7056,30 @@
                 {
                   "nameOnMethod": "input",
                   "name": "Keyword",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -6944,7 +7118,7 @@
                 "type": "Volo.Abp.Application.Dtos.PagedResultDto<VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamInListDto>",
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamInListDto>"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": true,
               "implementFrom": "VietlifeStore.Entity.SanPhamsList.SanPhams.ISanPhamsAppService"
             },
             "GetListAllAsync": {
@@ -6999,17 +7173,17 @@
               "allowAnonymous": null,
               "implementFrom": "VietlifeStore.Entity.SanPhamsList.SanPhams.ISanPhamsAppService"
             },
-            "GetByDanhMucAsyncByDanhMucId": {
-              "uniqueName": "GetByDanhMucAsyncByDanhMucId",
+            "GetByDanhMucAsyncBySlug": {
+              "uniqueName": "GetByDanhMucAsyncBySlug",
               "name": "GetByDanhMucAsync",
               "httpMethod": "GET",
-              "url": "api/app/san-phams/by-danh-muc/{danhMucId}",
+              "url": "api/app/san-phams/by-danh-muc",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "danhMucId",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
+                  "name": "slug",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
                   "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null
@@ -7017,15 +7191,15 @@
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "danhMucId",
-                  "name": "danhMucId",
+                  "nameOnMethod": "slug",
+                  "name": "slug",
                   "jsonName": null,
-                  "type": "System.Guid",
+                  "type": "System.String",
                   "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
                   "descriptorName": ""
                 }
               ],
@@ -7036,17 +7210,54 @@
               "allowAnonymous": true,
               "implementFrom": "VietlifeStore.Entity.SanPhams.SanPhamsAppService"
             },
-            "DeleteAsyncById": {
-              "uniqueName": "DeleteAsyncById",
-              "name": "DeleteAsync",
-              "httpMethod": "DELETE",
-              "url": "api/app/san-phams/{id}",
+            "GetTopBanChayAsyncByTop": {
+              "uniqueName": "GetTopBanChayAsyncByTop",
+              "name": "GetTopBanChayAsync",
+              "httpMethod": "GET",
+              "url": "api/app/san-phams/top-ban-chay",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
+                  "name": "top",
+                  "typeAsString": "System.Int32, System.Private.CoreLib",
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": true,
+                  "defaultValue": 6
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "top",
+                  "name": "top",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamInListDto>",
+                "typeSimple": "[VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamInListDto]"
+              },
+              "allowAnonymous": true,
+              "implementFrom": "VietlifeStore.Entity.SanPhamsList.SanPhams.ISanPhamsAppService"
+            },
+            "GetBySlugAsyncBySlug": {
+              "uniqueName": "GetBySlugAsyncBySlug",
+              "name": "GetBySlugAsync",
+              "httpMethod": "GET",
+              "url": "api/app/san-phams/by-slug",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "slug",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
                   "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null
@@ -7054,24 +7265,24 @@
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "id",
-                  "name": "id",
+                  "nameOnMethod": "slug",
+                  "name": "slug",
                   "jsonName": null,
-                  "type": "System.Guid",
+                  "type": "System.String",
                   "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
                   "descriptorName": ""
                 }
               ],
               "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
+                "type": "VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamDto",
+                "typeSimple": "VietlifeStore.Entity.SanPhamsList.SanPhams.SanPhamDto"
               },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+              "allowAnonymous": true,
+              "implementFrom": "VietlifeStore.Entity.SanPhams.SanPhamsAppService"
             },
             "GetListAsyncByInput": {
               "uniqueName": "GetListAsyncByInput",
@@ -7358,6 +7569,30 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",
@@ -7604,6 +7839,186 @@
               },
               "allowAnonymous": null,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<VietlifeStore.Entity.SanPhamsList.ThuocTinhs.ThuocTinhDto,VietlifeStore.Entity.SanPhamsList.ThuocTinhs.ThuocTinhDto,System.Guid,Volo.Abp.Application.Dtos.PagedResultRequestDto>"
+            }
+          }
+        },
+        "VietlifeStore.Entity.UploadFile.MediaAppService": {
+          "controllerName": "Media",
+          "controllerGroupName": "Media",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "VietlifeStore.Entity.UploadFile.MediaAppService",
+          "interfaces": [
+            {
+              "type": "VietlifeStore.Entity.UploadFile.IMediaAppService",
+              "name": "IMediaAppService",
+              "methods": [
+                {
+                  "name": "UploadAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "file",
+                      "typeAsString": "Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features",
+                      "type": "Microsoft.AspNetCore.Http.IFormFile",
+                      "typeSimple": "Microsoft.AspNetCore.Http.IFormFile",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "VietlifeStore.Entity.UploadFile.UploadResultDto",
+                    "typeSimple": "VietlifeStore.Entity.UploadFile.UploadResultDto"
+                  }
+                },
+                {
+                  "name": "GetAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "fileName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Content.IRemoteStreamContent",
+                    "typeSimple": "Volo.Abp.Content.IRemoteStreamContent"
+                  }
+                },
+                {
+                  "name": "DeleteAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "fileName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "UploadAsyncByFile": {
+              "uniqueName": "UploadAsyncByFile",
+              "name": "UploadAsync",
+              "httpMethod": "POST",
+              "url": "api/app/media/upload",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "file",
+                  "typeAsString": "Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features",
+                  "type": "Microsoft.AspNetCore.Http.IFormFile",
+                  "typeSimple": "Microsoft.AspNetCore.Http.IFormFile",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "file",
+                  "name": "file",
+                  "jsonName": null,
+                  "type": "Microsoft.AspNetCore.Http.IFormFile",
+                  "typeSimple": "Microsoft.AspNetCore.Http.IFormFile",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "FormFile",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "VietlifeStore.Entity.UploadFile.UploadResultDto",
+                "typeSimple": "VietlifeStore.Entity.UploadFile.UploadResultDto"
+              },
+              "allowAnonymous": true,
+              "implementFrom": "VietlifeStore.Entity.UploadFile.IMediaAppService"
+            },
+            "GetAsyncByFileName": {
+              "uniqueName": "GetAsyncByFileName",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/app/media",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "fileName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "fileName",
+                  "name": "fileName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Content.IRemoteStreamContent",
+                "typeSimple": "Volo.Abp.Content.IRemoteStreamContent"
+              },
+              "allowAnonymous": true,
+              "implementFrom": "VietlifeStore.Entity.UploadFile.IMediaAppService"
+            },
+            "DeleteAsyncByFileName": {
+              "uniqueName": "DeleteAsyncByFileName",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/media",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "fileName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "fileName",
+                  "name": "fileName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": true,
+              "implementFrom": "VietlifeStore.Entity.UploadFile.IMediaAppService"
             }
           }
         },
@@ -7888,6 +8303,30 @@
                 {
                   "nameOnMethod": "input",
                   "name": "Keyword",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -8671,6 +9110,30 @@
                 {
                   "nameOnMethod": "input",
                   "name": "Keyword",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sort",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "DanhMucSlug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -11800,6 +12263,87 @@
     }
   },
   "types": {
+    "Microsoft.AspNetCore.Http.IFormFile": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "ContentType",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ContentDisposition",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Headers",
+          "jsonName": null,
+          "type": "{System.String:Microsoft.Extensions.Primitives.StringValues}",
+          "typeSimple": "{string:Microsoft.Extensions.Primitives.StringValues}",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Length",
+          "jsonName": null,
+          "type": "System.Int64",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "FileName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "VietlifeStore.BaseListFilterDto": {
       "baseType": "Volo.Abp.Application.Dtos.PagedResultRequestDto",
       "isEnum": false,
@@ -11809,6 +12353,30 @@
       "properties": [
         {
           "name": "Keyword",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Sort",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DanhMucSlug",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -11968,30 +12536,6 @@
           "minimum": null,
           "maximum": null,
           "regex": null
-        },
-        {
-          "name": "AnhName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhContent",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
         }
       ]
     },
@@ -12055,30 +12599,6 @@
           "jsonName": null,
           "type": "System.Boolean",
           "typeSimple": "boolean",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhContent",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -12295,6 +12815,18 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "CreationTime",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -12403,30 +12935,6 @@
         },
         {
           "name": "DescriptionSEO",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhContent",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -14422,30 +14930,6 @@
           "minimum": null,
           "maximum": null,
           "regex": null
-        },
-        {
-          "name": "AnhName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhContent",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
         }
       ]
     },
@@ -14542,54 +15026,6 @@
         },
         {
           "name": "DescriptionSEO",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhThumbnailName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhThumbnailContent",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhBannerName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhBannerContent",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -14787,22 +15223,10 @@
           "regex": null
         },
         {
-          "name": "AnhThumbnailContent",
+          "name": "SoLuongSanPham",
           "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhBannerContent",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
+          "type": "System.Int32",
+          "typeSimple": "number",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -15078,10 +15502,10 @@
       "genericArguments": null,
       "properties": [
         {
-          "name": "SanPhamId",
+          "name": "Id",
           "jsonName": null,
-          "type": "System.Guid",
-          "typeSimple": "string",
+          "type": "System.Guid?",
+          "typeSimple": "string?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -15255,39 +15679,6 @@
           "name": "GiaTriThuocTinhId",
           "jsonName": null,
           "type": "System.Guid",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "VietlifeStore.Entity.SanPhamsList.SanPhams.AnhUploadDto": {
-      "baseType": null,
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": null,
-      "properties": [
-        {
-          "name": "FileName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Base64",
-          "jsonName": null,
-          "type": "System.String",
           "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
@@ -15594,34 +15985,10 @@
           "regex": null
         },
         {
-          "name": "AnhDaiDienName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "AnhDaiDienContent",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "AnhPhu",
           "jsonName": null,
-          "type": "[VietlifeStore.Entity.SanPhamsList.SanPhams.AnhUploadDto]",
-          "typeSimple": "[VietlifeStore.Entity.SanPhamsList.SanPhams.AnhUploadDto]",
+          "type": "[System.String]",
+          "typeSimple": "[string]",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -15634,6 +16001,18 @@
           "jsonName": null,
           "type": "[System.String]",
           "typeSimple": "[string]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PhanTramKhuyenMai",
+          "jsonName": null,
+          "type": "System.Decimal?",
+          "typeSimple": "number?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -15927,6 +16306,18 @@
           "regex": null
         },
         {
+          "name": "PhanTramGiamGia",
+          "jsonName": null,
+          "type": "System.Int32?",
+          "typeSimple": "number?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "ThuocTinhs",
           "jsonName": null,
           "type": "[VietlifeStore.Entity.SanPhamsList.ThuocTinhs.ThuocTinhDto]",
@@ -16032,6 +16423,30 @@
           "regex": null
         },
         {
+          "name": "Slug",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MoTaNgan",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "TrangThai",
           "jsonName": null,
           "type": "System.Boolean",
@@ -16080,10 +16495,22 @@
           "regex": null
         },
         {
-          "name": "AnhDaiDienContent",
+          "name": "PhanTramGiamGia",
           "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
+          "type": "System.Int32?",
+          "typeSimple": "number?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SoLuongDaBan",
+          "jsonName": null,
+          "type": "System.Int32?",
+          "typeSimple": "number?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -16270,6 +16697,27 @@
         },
         {
           "name": "PhoneNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "VietlifeStore.Entity.UploadFile.UploadResultDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Result",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -19612,6 +20060,51 @@
           "jsonName": null,
           "type": "System.Boolean",
           "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "Volo.Abp.Content.IRemoteStreamContent": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "FileName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ContentType",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ContentLength",
+          "jsonName": null,
+          "type": "System.Int64?",
+          "typeSimple": "number?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,

@@ -45,16 +45,6 @@ export class BannersService {
     { apiName: this.apiName,...config });
   
 
-  getImage = (fileName: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
-      method: 'GET',
-      responseType: 'text',
-      url: '/api/app/banners/image',
-      params: { fileName },
-    },
-    { apiName: this.apiName,...config });
-  
-
   getList = (input: PagedResultRequestDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<BannerDto>>({
       method: 'GET',
@@ -76,7 +66,7 @@ export class BannersService {
     this.restService.request<any, PagedResultDto<BannerInListDto>>({
       method: 'GET',
       url: '/api/app/banners/filter',
-      params: { keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

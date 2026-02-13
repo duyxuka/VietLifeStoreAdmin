@@ -9,4 +9,5 @@ import * as LienHes from './lien-hes';
 import * as SanPhams from './san-phams';
 import * as SanPhamsList from './san-phams-list';
 import * as TaiKhoans from './tai-khoans';
-export { Banners, CamNangs, CamNangsList, ChinhSachs, ChinhSachsList, DonHangs, DonHangsList, LienHes, SanPhams, SanPhamsList, TaiKhoans };
+import * as UploadFile from './upload-file';
+export { Banners, CamNangs, CamNangsList, ChinhSachs, ChinhSachsList, DonHangs, DonHangsList, LienHes, SanPhams, SanPhamsList, TaiKhoans, UploadFile };

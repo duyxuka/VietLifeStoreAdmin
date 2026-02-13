@@ -34,16 +34,6 @@ export class AnhSanPhamsService {
     { apiName: this.apiName,...config });
   
 
-  getImage = (fileName: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
-      method: 'GET',
-      responseType: 'text',
-      url: '/api/app/anh-san-phams/image',
-      params: { fileName },
-    },
-    { apiName: this.apiName,...config });
-  
-
   getListBySanPham = (sanPhamId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AnhSanPhamDto[]>({
       method: 'GET',
