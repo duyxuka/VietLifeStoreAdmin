@@ -54,7 +54,7 @@
             [auto]="false"
             [customUpload]="true"
             (onSelect)="onSelectImage($event)"
-            [maxFileSize]="204800"
+            [maxFileSize]="307200"
             class="w-full">
           </p-fileUpload>
           @if (previewImage) {
@@ -96,7 +96,7 @@
     </ng-template>
 
     <p-blockui [blocked]="blockedPanel" [target]="pnl">
-      <p-progress-spinner />
+      <p-progressSpinner style="top: 37%;" />
     </p-blockui>
 
   </p-panel>

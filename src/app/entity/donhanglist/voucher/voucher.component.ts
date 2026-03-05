@@ -155,7 +155,7 @@ export class VoucherComponent implements OnInit, OnDestroy {
     } else {
       setTimeout(() => {
         this.blockedPanel = false;
-      }, 500);
+      }, 1000);
     }
   }
 }

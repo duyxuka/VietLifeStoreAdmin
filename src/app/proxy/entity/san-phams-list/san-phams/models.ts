@@ -43,6 +43,9 @@ export interface SanPhamDto {
   gia: number;
   giaKhuyenMai: number;
   danhMucId?: string;
+  danhMucSlug?: string;
+  quaTangTen?: string;
+  quaTangGia?: number;
   quaTangId?: string;
   anh?: string;
   thuTu: number;
@@ -76,4 +79,8 @@ export interface SanPhamInListDto extends EntityDto<string> {
   thoiHanKetThuc?: string;
   phanTramGiamGia?: number;
   soLuongDaBan?: number;
+  danhMucSlug?: string;
+  quaTangTen?: string;
+  quaTangGia?: number;
+  hasVariants: boolean;
 }

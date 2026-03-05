@@ -151,7 +151,9 @@ export class ChinhsachComponent implements OnInit, OnDestroy {
     if (enabled) {
       this.blockedPanel = true;
     } else {
-      setTimeout(() => this.blockedPanel = false, 500);
+      setTimeout(() => {
+        this.blockedPanel = false;
+      }, 1000);
     }
   }
 }

@@ -167,10 +167,9 @@ export class DanhmucsanphamComponent implements OnInit, OnDestroy {
     if (enabled) {
       this.blockedPanel = true;
     } else {
-      // delay nhỏ tránh flicker
       setTimeout(() => {
         this.blockedPanel = false;
-      }, 300);
+      }, 1000);
     }
   }
 }

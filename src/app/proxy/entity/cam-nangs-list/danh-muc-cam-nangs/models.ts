@@ -23,4 +23,5 @@ export interface DanhMucCamNangInListDto extends EntityDto<string> {
   ten?: string;
   slug?: string;
   trangThai: boolean;
+  soLuongCamNang: number;
 }

@@ -145,7 +145,7 @@ export class DanhmuccamnangDetailComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.blockedPanel = false;
         this.btnDisabled = false;
-      }, 800);
+      }, 1000);
     }
   }
 }

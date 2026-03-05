@@ -44,6 +44,18 @@ export class AppMenu implements OnInit {
             ],
           },
           {
+            label: 'Quản lý video platform',
+            icon: 'pi pi-fw pi-cog',
+            items: [
+              {
+                label: 'Video platform',
+                icon: 'pi pi-fw pi-video',
+                routerLink: ['/entity/videoplatform'],
+                permission: 'VietlifeStore.VideoSocial.View',
+              }
+            ],
+          },
+          {
             label: 'Quản lý banner',
             icon: 'pi pi-fw pi-cog',
             items: [

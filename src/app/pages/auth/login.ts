@@ -15,7 +15,6 @@ import { LoginRequestDto } from '@/shared/models/login-request.dto';
 import { LoginResponseDto } from '@/shared/models/login-response.dto';
 import { TokenStorageService } from '@/shared/services/token.service';
 import { NotificationService } from '@/shared/services/notification.service';
-import { MessageService } from 'primeng/api';
 import { AuthService } from '@/shared/services/auth.service';
 import { Subject } from 'rxjs';
 
@@ -36,7 +35,6 @@ import { Subject } from 'rxjs';
     ProgressSpinnerModule,
     AppFloatingConfigurator
   ],
-  providers: [NotificationService,MessageService],
   template: `
     <app-floating-configurator />
     <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden">
@@ -94,7 +92,7 @@ import { Subject } from 'rxjs';
     </div>
   `
 })
-export class Login  implements OnDestroy {
+export class Login implements OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   loginForm: FormGroup;
   blockedPanel: boolean = false;
@@ -112,7 +110,6 @@ export class Login  implements OnDestroy {
       password: ['', Validators.required]
     });
   }
-
   login() {
     if (this.loginForm.invalid) {
       this.notificationService.showError('Vui lòng nhập email và mật khẩu.');
@@ -130,10 +127,20 @@ export class Login  implements OnDestroy {
       next: (res: LoginResponseDto) => {
         this.tokenService.saveToken(res.access_token);
         this.tokenService.saveRefreshToken(res.refresh_token);
-        this.blockedPanel = false;
 
-        // chuyển trang sau khi login
-        this.router.navigate(['/dashboard']);
+        const role = this.authService.getUserRole();
+        if (role === 'Admin') {
+          setTimeout(() => {
+            this.blockedPanel = false;
+            window.location.href = '/admin/dashboard';
+          }, 800);
+          this.notificationService.showSuccess('Đăng nhập thành công.');
+        } else {
+          this.notificationService.showError('Bạn không có quyền truy cập Admin.');
+          setTimeout(() => {
+            this.authService.logout();
+          }, 1500);
+        }
       },
       error: (err) => {
         console.error(err);

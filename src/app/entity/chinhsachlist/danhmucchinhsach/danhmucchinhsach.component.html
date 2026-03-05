@@ -51,8 +51,7 @@
     [(selection)]="selectedItems"
     selectionMode="multiple"
     dataKey="id"
-    [rowHover]="true"
-    [tableStyle]="{ 'min-width': '55rem' }">
+    [rowHover]="true">
 
     <ng-template pTemplate="header">
       <tr>
@@ -113,7 +112,7 @@
 
   <!-- Block UI -->
   <p-blockui [blocked]="blockedPanel" [target]="dt">
-    <p-progress-spinner />
+    <p-progress-spinner style="top: 37%;" />
   </p-blockui>
 
 </p-panel>

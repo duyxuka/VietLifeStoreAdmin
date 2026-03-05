@@ -2,6 +2,7 @@ import type { UploadResultDto } from './models';
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { IFormFile } from '../../microsoft/asp-net-core/http/models';
+import type { IActionResult } from '../../microsoft/asp-net-core/mvc/models';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,14 @@ export class MediaService {
       responseType: 'blob',
       url: '/api/app/media',
       params: { fileName },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getFile = (fileName: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, IActionResult>({
+      method: 'GET',
+      url: `/files/${fileName}`,
     },
     { apiName: this.apiName,...config });
   

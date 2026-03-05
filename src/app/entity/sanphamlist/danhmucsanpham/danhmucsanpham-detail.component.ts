@@ -300,7 +300,7 @@ export class DanhmucsanphamDetailComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.blockedPanel = false;
         this.btnDisabled = false;
-      }, 300);
+      }, 1000);
     }
   }
 }

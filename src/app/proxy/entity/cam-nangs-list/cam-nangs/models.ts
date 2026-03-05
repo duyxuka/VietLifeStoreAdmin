@@ -11,6 +11,9 @@ export interface CamNangDto {
   titleSEO?: string;
   keyword?: string;
   descriptionSEO?: string;
+  creationTime?: string;
+  tenDanhMuc?: string;
+  slugDanhMuc?: string;
 }
 
 export interface CamNangInListDto extends EntityDto<string> {
@@ -21,6 +24,7 @@ export interface CamNangInListDto extends EntityDto<string> {
   danhMucCamNangId?: string;
   trangThai: boolean;
   creationTime?: string;
+  tenDanhMuc?: string;
 }
 
 export interface CreateUpdateCamNangDto {

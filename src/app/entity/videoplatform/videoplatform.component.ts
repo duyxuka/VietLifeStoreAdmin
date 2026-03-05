@@ -6,23 +6,23 @@ import { ConfirmationService } from 'primeng/api';
 import { StandaloneSharedModule } from '@/standaloneshare.module';
 import { NotificationService } from '@/shared/services/notification.service';
 
-import { DanhmucchinhsachDetailComponent } from './danhmucchinhsach-detail.component';
-import { DanhMucChinhSachsService } from '@/proxy/entity/chinh-sachs';
-import { DanhMucChinhSachDto, DanhMucChinhSachInListDto } from '@/proxy/entity/chinh-sachs-list/danh-muc-chinh-sachs';
+import { SocialVideosService } from '@/proxy/entity/social-videos';
+import { VideoplatformDetailComponent } from './videoplatform-detail.component';
+import { SocialVideoDto, SocialVideoInListDto } from '@/proxy/entity/videoplatform';
 
 @Component({
-  selector: 'app-danhmucchinhsach',
+  selector: 'app-videoplatform',
   standalone: true,
   imports: [StandaloneSharedModule],
-  templateUrl: './danhmucchinhsach.component.html',
+  templateUrl: './videoplatform.component.html',
 })
-export class DanhmucchinhsachComponent implements OnInit, OnDestroy {
+export class VideoplatformComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject<void>();
   blockedPanel = false;
 
-  items: DanhMucChinhSachInListDto[] = [];
-  selectedItems: DanhMucChinhSachInListDto[] = [];
+  items: SocialVideoInListDto[] = [];
+  selectedItems: SocialVideoInListDto[] = [];
 
   keyword = '';
   skipCount = 0;
@@ -30,7 +30,7 @@ export class DanhmucchinhsachComponent implements OnInit, OnDestroy {
   totalCount = 0;
 
   constructor(
-    private service: DanhMucChinhSachsService,
+    private service: SocialVideosService,
     private dialogService: DialogService,
     private confirmationService: ConfirmationService,
     private notificationService: NotificationService
@@ -71,15 +71,15 @@ export class DanhmucchinhsachComponent implements OnInit, OnDestroy {
   }
 
   showAddModal() {
-    const ref = this.dialogService.open(DanhmucchinhsachDetailComponent, {
-      header: 'Thêm danh mục chính sách',
+    const ref = this.dialogService.open(VideoplatformDetailComponent, {
+      header: 'Thêm Video',
       modal: true,
       width: '70%',
       dismissableMask: true,
       closable: true
     });
 
-    ref.onClose.subscribe((data: DanhMucChinhSachDto) => {
+    ref.onClose.subscribe((data: SocialVideoDto) => {
       if (data) {
         this.loadData();
         this.selectedItems = [];
@@ -94,8 +94,8 @@ export class DanhmucchinhsachComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const ref = this.dialogService.open(DanhmucchinhsachDetailComponent, {
-      header: 'Cập nhật danh mục chính sách',
+    const ref = this.dialogService.open(VideoplatformDetailComponent, {
+      header: 'Cập nhật Video',
       modal: true,
       width: '70%',
       dismissableMask: true,
@@ -103,7 +103,7 @@ export class DanhmucchinhsachComponent implements OnInit, OnDestroy {
       data: { id: this.selectedItems[0].id }
     });
 
-    ref.onClose.subscribe((data: DanhMucChinhSachDto) => {
+    ref.onClose.subscribe((data: SocialVideoDto) => {
       if (data) {
         this.loadData();
         this.selectedItems = [];
@@ -121,7 +121,7 @@ export class DanhmucchinhsachComponent implements OnInit, OnDestroy {
     const ids = this.selectedItems.map(x => x.id);
 
     this.confirmationService.confirm({
-      message: 'Bạn có chắc muốn xóa các danh mục đã chọn?',
+      message: 'Bạn có chắc muốn xóa các video đã chọn?',
       accept: () => this.deleteConfirmed(ids)
     });
   }
@@ -146,9 +146,7 @@ export class DanhmucchinhsachComponent implements OnInit, OnDestroy {
     if (enabled) {
       this.blockedPanel = true;
     } else {
-      setTimeout(() => {
-        this.blockedPanel = false;
-      }, 1000);
+      setTimeout(() => this.blockedPanel = false, 300);
     }
   }
 }

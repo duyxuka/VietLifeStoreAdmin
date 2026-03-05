@@ -12,6 +12,7 @@ import { ChinhsachComponent } from "./chinhsachlist/chinhsach/chinhsach.componen
 import { DonhangComponent } from "./donhanglist/donhang/donhang.component";
 import { VoucherComponent } from "./donhanglist/voucher/voucher.component";
 import { LienheComponent } from "./lienhe/lienhe.component";
+import { VideoplatformComponent } from "./videoplatform/videoplatform.component";
 
 const routes: Routes = [
   {
@@ -100,6 +101,14 @@ const routes: Routes = [
     // canActivate: [permissionGuard],
     // data: {
     //   requiredPolicy: 'VietLifeStore.LienHe.View',
+    // },
+  },
+  {
+    path: 'videoplatform',
+    component: VideoplatformComponent,
+    // canActivate: [permissionGuard],
+    // data: {
+    //   requiredPolicy: 'VietLifeStore.VideoSocial.View',
     // },
   },
 

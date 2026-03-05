@@ -8,44 +8,44 @@ import { ValidationMessageComponent } from '@/shared/modules/validation-message/
 import { NotificationService } from '@/shared/services/notification.service';
 import { UtilityService } from '@/shared/services/utility.service';
 
-import { ChinhSachDto } from '@/proxy/entity/chinh-sachs-list/chinh-sachs';
-import { ChinhSachsService } from '@/proxy/entity/chinh-sachs';
-import { DanhMucChinhSachsService } from '@/proxy/entity/chinh-sachs';
+import { SocialVideosService } from '@/proxy/entity/social-videos';
+import { SocialVideoDto } from '@/proxy/entity/videoplatform';
 
 @Component({
-  selector: 'app-chinhsach-detail',
+  selector: 'app-videoplatform-detail',
   standalone: true,
-  templateUrl: './chinhsach-detail.component.html',
+  templateUrl: './videoplatform-detail.component.html',
   imports: [StandaloneSharedModule, ValidationMessageComponent]
 })
-export class ChinhsachDetailComponent implements OnInit, OnDestroy {
+export class VideoplatformDetailComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject<void>();
 
   form!: FormGroup;
-  selectedEntity = {} as ChinhSachDto;
+  selectedEntity = {} as SocialVideoDto;
 
   blockedPanel = false;
   btnDisabled = false;
 
-  danhMucOptions: any[] = [];
+  platformOptions = [
+    { label: 'YouTube', value: 'YouTube' },
+    { label: 'TikTok', value: 'TikTok' },
+    { label: 'Facebook', value: 'Facebook' }
+  ];
 
   validationMessages = {
-    tieuDe: [
-      { type: 'required', message: 'Bạn phải nhập tiêu đề' }
+    title: [
+      { type: 'required', message: 'Bạn phải nhập tiêu đề' },
+      { type: 'maxlength', message: 'Không quá 255 ký tự' }
     ],
-    noiDung: [
-      { type: 'required', message: 'Bạn phải nhập nội dung' }
-    ],
-    danhMucChinhSachId: [
-      { type: 'required', message: 'Bạn phải chọn danh mục' }
+    platform: [
+      { type: 'required', message: 'Bạn phải chọn nền tảng' }
     ]
   };
 
   constructor(
     private fb: FormBuilder,
-    private service: ChinhSachsService,
-    private danhMucService: DanhMucChinhSachsService,
+    private service: SocialVideosService,
     private config: DynamicDialogConfig,
     private ref: DynamicDialogRef,
     private util: UtilityService,
@@ -54,7 +54,6 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buildForm();
-    this.loadDanhMuc();
     this.initData();
   }
 
@@ -66,22 +65,21 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.form = this.fb.group({
-      tieuDe: new FormControl(this.selectedEntity.tieuDe || null, Validators.required),
-      noiDung: new FormControl(this.selectedEntity.noiDung || null, Validators.required),
-      trangThai: new FormControl(this.selectedEntity.trangThai ?? true),
-      danhMucChinhSachId: new FormControl(
-        this.selectedEntity.danhMucChinhSachId || null,
+      title: new FormControl(this.selectedEntity.title || null, [
+        Validators.required,
+        Validators.maxLength(255)
+      ]),
+      description: new FormControl(this.selectedEntity.description || null),
+      platform: new FormControl(this.selectedEntity.platform || null, [
         Validators.required
-      )
+      ]),
+      videoId: new FormControl(this.selectedEntity.videoId || null),
+      videoUrl: new FormControl(this.selectedEntity.videoUrl || null),
+      thumbnailUrl: new FormControl(this.selectedEntity.thumbnailUrl || null),
+      section: new FormControl(this.selectedEntity.section || null),
+      displayOrder: new FormControl(this.selectedEntity.displayOrder ?? 0),
+      isActive: new FormControl(this.selectedEntity.isActive ?? true)
     });
-  }
-
-  loadDanhMuc() {
-    this.danhMucService.getListAll()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(res => {
-        this.danhMucOptions = res;
-      });
   }
 
   initData() {
@@ -140,7 +138,7 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.blockedPanel = false;
         this.btnDisabled = false;
-      }, 1000);
+      }, 500);
     }
   }
 }

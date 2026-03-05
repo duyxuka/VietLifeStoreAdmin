@@ -109,7 +109,13 @@ export class LienheComponent implements OnInit, OnDestroy {
       });
   }
 
-  toggleBlockUI(value: boolean) {
-    this.blockedPanel = value;
+  private toggleBlockUI(enabled: boolean) {
+    if (enabled) {
+      this.blockedPanel = true;
+    } else {
+      setTimeout(() => {
+        this.blockedPanel = false;
+      }, 1000);
+    }
   }
 }

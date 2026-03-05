@@ -5,12 +5,13 @@ import { environment } from 'src/environments/environment';
 import { LoginRequestDto } from '../models/login-request.dto';
 import { LoginResponseDto } from '../models/login-response.dto';
 import { TokenStorageService } from './token.service';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient, private tokenService: TokenStorageService) {}
+  constructor(private http: HttpClient, private tokenService: TokenStorageService) { }
 
   public login(input: LoginRequestDto): Observable<LoginResponseDto> {
     const params = new URLSearchParams();
@@ -48,5 +49,12 @@ export class AuthService {
 
   public logout(): void {
     this.tokenService.signOut();
+  }
+  public getUserRole(): string | null {
+    const token = this.tokenService.getToken();
+    if (!token) return null;
+
+    const decoded: any = jwtDecode(token);
+    return decoded.role;
   }
 }

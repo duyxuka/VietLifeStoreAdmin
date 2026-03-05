@@ -95,7 +95,7 @@ export class SanphamDetailComponent implements OnInit, OnDestroy {
     if (!file) return;
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    const MAX_SIZE = 200 * 1024;
+    const MAX_SIZE = 300 * 1024;
 
     if (!allowedTypes.includes(file.type)) {
       this.notify.showError('Chỉ cho phép ảnh JPG, PNG, WEBP');
@@ -103,7 +103,7 @@ export class SanphamDetailComponent implements OnInit, OnDestroy {
     }
 
     if (file.size > MAX_SIZE) {
-      this.notify.showError('Ảnh đại diện phải ≤ 200KB');
+      this.notify.showError('Ảnh đại diện phải ≤ 300KB');
       return;
     }
 
@@ -140,7 +140,7 @@ export class SanphamDetailComponent implements OnInit, OnDestroy {
     if (!files.length) return;
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    const MAX_SIZE = 200 * 1024;
+    const MAX_SIZE = 300 * 1024;
 
     // ✅ Tính tổng số ảnh hiện tại
     const currentTotalImages = this.anhPhuOldNames.length + this.selectedAnhPhuFiles.length;
@@ -157,7 +157,7 @@ export class SanphamDetailComponent implements OnInit, OnDestroy {
       }
 
       if (file.size > MAX_SIZE) {
-        this.notify.showError(`Ảnh ${file.name} vượt quá 200KB`);
+        this.notify.showError(`Ảnh ${file.name} vượt quá 300KB`);
         return;
       }
       // ✅ Preview local

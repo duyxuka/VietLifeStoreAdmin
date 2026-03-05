@@ -230,3 +230,6 @@
 :host ::ng-deep .p-overlaypanel .ck-balloon-panel {
     z-index: 10060 !important;
 }
+.p-datatable-table-container {
+    overflow: visible !important;
+}

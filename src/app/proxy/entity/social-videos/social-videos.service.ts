@@ -1,20 +1,20 @@
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto, PagedResultRequestDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { ChinhSachDto, ChinhSachInListDto, CreateUpdateChinhSachDto } from '../chinh-sachs-list/chinh-sachs/models';
 import type { BaseListFilterDto } from '../../models';
+import type { CreateUpdateSocialVideoDto, SocialVideoDto, SocialVideoInListDto } from '../videoplatform/models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ChinhSachsService {
+export class SocialVideosService {
   apiName = 'Default';
   
 
-  create = (input: CreateUpdateChinhSachDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ChinhSachDto>({
+  create = (input: CreateUpdateSocialVideoDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SocialVideoDto>({
       method: 'POST',
-      url: '/api/app/chinh-sachs',
+      url: '/api/app/social-videos',
       body: input,
     },
     { apiName: this.apiName,...config });
@@ -23,7 +23,7 @@ export class ChinhSachsService {
   delete = (id: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'DELETE',
-      url: `/api/app/chinh-sachs/${id}`,
+      url: `/api/app/social-videos/${id}`,
     },
     { apiName: this.apiName,...config });
   
@@ -31,58 +31,59 @@ export class ChinhSachsService {
   deleteMultiple = (ids: string[], config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'DELETE',
-      url: '/api/app/chinh-sachs/multiple',
+      url: '/api/app/social-videos/multiple',
       params: { ids },
     },
     { apiName: this.apiName,...config });
   
 
   get = (id: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ChinhSachDto>({
+    this.restService.request<any, SocialVideoDto>({
       method: 'GET',
-      url: `/api/app/chinh-sachs/${id}`,
-    },
-    { apiName: this.apiName,...config });
-  
-
-  getByDanhMucId = (danhMucId: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ChinhSachInListDto[]>({
-      method: 'GET',
-      url: `/api/app/chinh-sachs/by-danh-muc-id/${danhMucId}`,
+      url: `/api/app/social-videos/${id}`,
     },
     { apiName: this.apiName,...config });
   
 
   getList = (input: PagedResultRequestDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, PagedResultDto<ChinhSachDto>>({
+    this.restService.request<any, PagedResultDto<SocialVideoDto>>({
       method: 'GET',
-      url: '/api/app/chinh-sachs',
+      url: '/api/app/social-videos',
       params: { skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
 
   getListAll = (config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ChinhSachInListDto[]>({
+    this.restService.request<any, SocialVideoInListDto[]>({
       method: 'GET',
-      url: '/api/app/chinh-sachs/all',
+      url: '/api/app/social-videos/all',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListBySection = (section: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SocialVideoInListDto[]>({
+      method: 'GET',
+      url: '/api/app/social-videos/by-section',
+      params: { section },
     },
     { apiName: this.apiName,...config });
   
 
   getListFilter = (input: BaseListFilterDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, PagedResultDto<ChinhSachInListDto>>({
+    this.restService.request<any, PagedResultDto<SocialVideoInListDto>>({
       method: 'GET',
-      url: '/api/app/chinh-sachs/filter',
+      url: '/api/app/social-videos/filter',
       params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
 
-  update = (id: string, input: CreateUpdateChinhSachDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, ChinhSachDto>({
+  update = (id: string, input: CreateUpdateSocialVideoDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SocialVideoDto>({
       method: 'PUT',
-      url: `/api/app/chinh-sachs/${id}`,
+      url: `/api/app/social-videos/${id}`,
       body: input,
     },
     { apiName: this.apiName,...config });

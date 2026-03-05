@@ -1,0 +1,131 @@
+<form [formGroup]="form" (ngSubmit)="saveChange()" skipValidation>
+  <p-panel #pnl header="Chi tiết Video Social">
+    <ng-template pTemplate="body">
+      <div class="flex flex-col gap-6 mt-4">
+
+        <!-- Title -->
+        <div>
+          <label class="block font-bold mb-2">
+            Tiêu đề <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            formControlName="title"
+            placeholder="Nhập tiêu đề video"
+            fluid
+          />
+          <app-validation-message
+            [entityForm]="form"
+            fieldName="title"
+            [validationMessages]="validationMessages"
+          />
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block font-bold mb-2">Mô tả</label>
+          <textarea
+            pInputTextarea
+            rows="3"
+            formControlName="description"
+            fluid
+          ></textarea>
+        </div>
+
+        <!-- Platform -->
+        <div>
+          <label class="block font-bold mb-2">
+            Nền tảng <span class="text-red-500">*</span>
+          </label>
+          <p-select
+            [options]="platformOptions"
+            formControlName="platform"
+            placeholder="Chọn nền tảng"
+            optionLabel="label"
+            optionValue="value"
+            fluid>
+          </p-select>
+        </div>
+
+        <!-- Video ID -->
+        <div>
+          <label class="block font-bold mb-2">Video ID</label>
+          <input pInputText formControlName="videoId" fluid />
+        </div>
+
+        <!-- Video URL -->
+        <div>
+          <label class="block font-bold mb-2">Video URL</label>
+          <input pInputText formControlName="videoUrl" fluid />
+        </div>
+
+        <!-- Thumbnail URL -->
+        <div>
+          <label class="block font-bold mb-2">Thumbnail URL</label>
+          <input pInputText formControlName="thumbnailUrl" fluid />
+        </div>
+
+        <!-- Preview Thumbnail -->
+        <div *ngIf="form.value.thumbnailUrl">
+          <label class="block font-bold mb-2">Xem trước Thumbnail</label>
+          <img
+            [src]="form.value.thumbnailUrl"
+            alt="thumbnail"
+            class="w-64 rounded shadow border"
+          />
+        </div>
+
+        <!-- Section -->
+        <div>
+          <label class="block font-bold mb-2">Section</label>
+          <input pInputText formControlName="section" fluid />
+        </div>
+
+        <!-- Display Order -->
+        <div>
+          <label class="block font-bold mb-2">Thứ tự hiển thị</label>
+          <input
+            type="number"
+            pInputText
+            formControlName="displayOrder"
+            fluid
+          />
+        </div>
+
+        <!-- Active -->
+        <div class="flex items-center gap-3">
+          <label class="font-bold">Trạng thái</label>
+          <p-toggleswitch formControlName="isActive"></p-toggleswitch>
+        </div>
+
+      </div>
+    </ng-template>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+      <p-toolbar>
+        <ng-template pTemplate="end">
+          <p-button
+            label="Hủy"
+            icon="pi pi-times"
+            severity="secondary"
+            [outlined]="true"
+            (onClick)="cancel()"
+            class="mr-2"
+          />
+          <p-button
+            type="submit"
+            label="Lưu lại"
+            icon="pi pi-check"
+            [disabled]="!form.valid || btnDisabled"
+            [loading]="btnDisabled"
+          />
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <p-blockui [blocked]="blockedPanel" [target]="pnl">
+      <p-progressSpinner style="top: 37%;" />
+    </p-blockui>
+  </p-panel>
+</form>

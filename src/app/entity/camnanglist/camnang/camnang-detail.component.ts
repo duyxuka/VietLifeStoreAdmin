@@ -138,10 +138,10 @@ export class CamnangDetailComponent implements OnInit, OnDestroy {
     if (!file) return;
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    const MAX_SIZE = 200 * 1024;
+    const MAX_SIZE = 300 * 1024;
 
     if (file.size > MAX_SIZE) {
-      this.notificationService.showError('Ảnh phải nhỏ hơn hoặc bằng 200KB');
+      this.notificationService.showError('Ảnh phải nhỏ hơn hoặc bằng 300KB');
       return;
     }
 
@@ -248,7 +248,7 @@ export class CamnangDetailComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.blockedPanel = false;
         this.btnDisabled = false;
-      }, 300);
+      }, 1000);
     }
   }
 }

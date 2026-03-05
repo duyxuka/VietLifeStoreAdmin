@@ -153,7 +153,13 @@ export class SanphamComponent implements OnInit, OnDestroy {
 
   // ================= UI =================
 
-  toggleBlockUI(enabled: boolean) {
-    this.blockedPanel = enabled;
+  private toggleBlockUI(enabled: boolean) {
+    if (enabled) {
+      this.blockedPanel = true;
+    } else {
+      setTimeout(() => {
+        this.blockedPanel = false;
+      }, 1000);
+    }
   }
 }

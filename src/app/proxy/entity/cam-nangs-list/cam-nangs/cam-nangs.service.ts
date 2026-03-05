@@ -45,6 +45,24 @@ export class CamNangsService {
     { apiName: this.apiName,...config });
   
 
+  getByDanhMuc = (slug: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, CamNangInListDto[]>({
+      method: 'GET',
+      url: '/api/app/cam-nangs/by-danh-muc',
+      params: { slug },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getBySlug = (slug: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, CamNangDto>({
+      method: 'GET',
+      url: '/api/app/cam-nangs/by-slug',
+      params: { slug },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getLatestCamNangHome = (take: number = 4, config?: Partial<Rest.Config>) =>
     this.restService.request<any, CamNangInListDto[]>({
       method: 'GET',
