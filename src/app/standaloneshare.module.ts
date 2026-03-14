@@ -24,6 +24,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ChipModule } from 'primeng/chip';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   exports: [
@@ -52,7 +53,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     ToggleSwitchModule,
     ChipModule,
     CKEditorModule,
-    FileUploadModule
+    FileUploadModule,
+    TooltipModule
   ]
 })
 export class StandaloneSharedModule {}

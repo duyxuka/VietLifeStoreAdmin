@@ -1,0 +1,148 @@
+<p-panel header="Quản lý đánh giá sản phẩm" #dt>
+  <p-toolbar styleClass="mb-4">
+    <ng-template #start>
+      <p-button
+        label="Seeding"
+        icon="pi pi-bolt"
+        class="mr-2"
+        (onClick)="showSeedingModal()"
+        severity="help"
+      />
+      <p-button
+        label="Xóa"
+        icon="pi pi-trash"
+        [disabled]="selectedItems.length === 0"
+        (onClick)="deleteItems()"
+        severity="danger"
+      />
+    </ng-template>
+
+    <ng-template #end>
+      <div class="flex align-items-center gap-2">
+
+        <!-- Lọc theo sản phẩm -->
+        <p-select
+          [options]="sanPhamOptions"
+          [(ngModel)]="selectedSanPhamId"
+          optionLabel="ten"
+          optionValue="id"
+          [filter]="true"
+          placeholder="Chọn sản phẩm"
+          [showClear]="true"
+          style="width: 250px;"
+          (onChange)="loadData()"
+        />
+
+        <p-iconfield iconPosition="left">
+          <p-inputicon styleClass="pi pi-search" />
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="keyword"
+            (keyup.enter)="loadData()"
+            placeholder="Tìm theo tên, nội dung..."
+          />
+        </p-iconfield>
+
+        <p-button
+          icon="pi pi-search"
+          (onClick)="loadData()"
+          severity="secondary"
+        />
+
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    [value]="items"
+    [(selection)]="selectedItems"
+    selectionMode="multiple"
+    dataKey="id"
+    [rowHover]="true"
+  >
+    <ng-template #header>
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th style="width: 160px">Người đánh giá</th>
+        <th style="width: 180px">Email</th>
+        <th style="width: 180px">Sản phẩm</th>
+        <th style="width: 110px">Số sao</th>
+        <th>Nội dung</th>
+        <th style="width: 130px">Thời gian</th>
+        <th style="width: 120px">Trạng thái</th>
+        <th style="width: 100px">Thao tác</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-row>
+      <tr [pSelectableRow]="row">
+        <td>
+          <p-tableCheckbox [value]="row" />
+        </td>
+        <td>{{ row.tenNguoiDung }}</td>
+        <td>{{ row.email }}</td>
+        <td>{{ row.tenSanPham }}</td>
+        <td>
+          <span class="flex align-items-center gap-1">
+            <ng-container *ngFor="let s of [1,2,3,4,5]">
+              <i
+                class="pi"
+                [ngClass]="s <= row.soSao ? 'pi-star-fill' : 'pi-star'"
+                style="color: #f59e0b; font-size: 0.85rem;"
+              ></i>
+            </ng-container>
+            <span class="ml-1 text-sm font-semibold">{{ row.soSao }}/5</span>
+          </span>
+        </td>
+        <td>
+          <span
+            [pTooltip]="row.noiDung"
+            tooltipPosition="top"
+            style="cursor: help"
+          >
+            {{ row.noiDung | slice:0:80 }}{{ row.noiDung?.length > 80 ? '...' : '' }}
+          </span>
+        </td>
+        <td>{{ row.creationTime | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>
+          <p-tag
+            [value]="row.trangThai ? 'Hiển thị' : 'Đã ẩn'"
+            [severity]="row.trangThai ? 'success' : 'secondary'"
+            [rounded]="true"
+          />
+        </td>
+        <td>
+          <p-button
+            [icon]="row.trangThai ? 'pi pi-eye-slash' : 'pi pi-eye'"
+            [pTooltip]="row.trangThai ? 'Ẩn đánh giá' : 'Duyệt đánh giá'"
+            tooltipPosition="top"
+            [text]="true"
+            [severity]="row.trangThai ? 'secondary' : 'success'"
+            (onClick)="toggleTrangThai(row)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #summary>
+      <div style="padding: 20px 0">
+        Tổng số bản ghi: {{ totalCount }}
+      </div>
+    </ng-template>
+  </p-table>
+
+  <p-paginator
+    [rows]="maxResultCount"
+    [totalRecords]="totalCount"
+    (onPageChange)="pageChanged($event)"
+    [rowsPerPageOptions]="[10,20,30,50,100]"
+    [showCurrentPageReport]="true"
+  />
+
+  <p-blockui [blocked]="blockedPanel" [target]="dt">
+    <p-progress-spinner style="top: 37%;" />
+  </p-blockui>
+</p-panel>

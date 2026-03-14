@@ -85,7 +85,7 @@ export class UsersService {
     this.restService.request<any, PagedResultDto<UserInListDto>>({
       method: 'GET',
       url: '/api/app/users/with-filter',
-      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, id: input.id, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

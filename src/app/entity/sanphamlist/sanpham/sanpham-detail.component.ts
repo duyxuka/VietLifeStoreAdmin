@@ -17,6 +17,7 @@ import { UploadResultDto } from '@/proxy/entity/upload-file';
   standalone: true,
   imports: [StandaloneSharedModule, ValidationMessageComponent],
   templateUrl: './sanpham-detail.component.html',
+  styleUrl: './sanpham.component.scss'
 })
 export class SanphamDetailComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
@@ -136,7 +137,7 @@ export class SanphamDetailComponent implements OnInit, OnDestroy {
   // ================== ẢNH PHỤ ==================
 
   onAnhPhuSelect(event: any) {
-    const files: File[] = event.currentFiles || event.files || [];
+    const files: File[] = Array.from(event.target.files || []);
     if (!files.length) return;
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -203,6 +204,9 @@ export class SanphamDetailComponent implements OnInit, OnDestroy {
       slug: [null],
       danhMucId: [null, Validators.required],
       moTaNgan: [null],
+      thuTu: [null],
+      luotXem: [null],
+      luotMua: [null],
       moTa: [null],
       huongDanSuDung: [null],
       thongSoKyThuat: [null],
@@ -448,16 +452,19 @@ export class SanphamDetailComponent implements OnInit, OnDestroy {
 
       // ✅ Ảnh phụ - hiển thị tất cả ảnh cũ
       if (res.anhPhu?.length) {
-        this.anhPhuPreviews = [];
         this.anhPhuOldNames = [...res.anhPhu];
 
-        res.anhPhu.forEach(fileName => {
+        const requests = res.anhPhu.map(fileName =>
           this.mediaHttp.get(fileName)
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(blob => {
-              this.anhPhuPreviews.push(URL.createObjectURL(blob));
-            });
-        });
+        );
+
+        forkJoin(requests)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(blobs => {
+            this.anhPhuPreviews = blobs.map(blob =>
+              URL.createObjectURL(blob),
+            );
+          });
       }
       // Thuộc tính
       if (res.thuocTinhs?.length) {

@@ -33,10 +33,6 @@ export class DanhmuccamnangDetailComponent implements OnInit, OnDestroy {
       { type: 'required', message: 'Bạn phải nhập tên danh mục' },
       { type: 'maxlength', message: 'Không quá 255 ký tự' }
     ],
-    slug: [
-      { type: 'required', message: 'Bạn phải nhập slug' },
-      { type: 'maxlength', message: 'Không quá 255 ký tự' }
-    ]
   };
 
   constructor(
@@ -65,10 +61,7 @@ export class DanhmuccamnangDetailComponent implements OnInit, OnDestroy {
         this.selectedEntity.ten || null,
         [Validators.required, Validators.maxLength(255)]
       ),
-      slug: new FormControl(
-        this.selectedEntity.slug || null,
-        [Validators.required, Validators.maxLength(255)]
-      ),
+      slug: new FormControl(this.selectedEntity.slug || null),
       titleSEO: new FormControl(this.selectedEntity.titleSEO || null),
       keyword: new FormControl(this.selectedEntity.keyword || null),
       descriptionSEO: new FormControl(this.selectedEntity.descriptionSEO || null),
@@ -101,7 +94,10 @@ export class DanhmuccamnangDetailComponent implements OnInit, OnDestroy {
 
   saveChange() {
     this.toggleBlockUI(true);
-
+    const slug = this.form.get('slug')?.value?.trim();
+    if (!slug && this.form.get('ten')?.value?.trim()) {
+      this.form.patchValue({ slug: this.util.MakeSeoTitle(this.form.get('ten')!.value.trim()) });
+    }
     const payload = this.form.value;
 
     if (this.util.isEmpty(this.config.data?.id)) {

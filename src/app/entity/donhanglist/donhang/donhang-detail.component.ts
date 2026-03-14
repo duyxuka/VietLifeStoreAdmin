@@ -26,9 +26,15 @@ export class DonHangDetailComponent implements OnInit, OnDestroy {
   sanPhamOptions: any[] = [];
   phuongThucThanhToanOptions = [
     { label: 'COD', value: 'COD' },
-    { label: 'Chuyển khoản', value: 'BANK' }
+    { label: 'Chuyển khoản', value: 'VNPAY' }
   ];
-
+  trangThaiOptions = [
+  { label: 'Chờ xác nhận', value: 0, disabled: false },
+  { label: 'Đang xử lý', value: 1, disabled: false },
+  { label: 'Đang giao', value: 2, disabled: false },
+  { label: 'Hoàn thành', value: 3, disabled: false },
+  { label: 'Đã hủy', value: 4, disabled: false }
+];
   constructor(
     private fb: FormBuilder,
     private donHangService: DonHangsService,
@@ -64,7 +70,9 @@ export class DonHangDetailComponent implements OnInit, OnDestroy {
       email: [],
       diaChi: [],
       ghiChu: [''],
+      giamGiaVoucher: [0],
       phuongThucThanhToan: [],
+      trangThai: [0],
       ngayDat: [new Date()],
       tongTien: [{ value: 0, disabled: true }],
       chiTietDonHangs: this.fb.array([]),
@@ -80,19 +88,16 @@ export class DonHangDetailComponent implements OnInit, OnDestroy {
       soLuong: 1,
       gia: 0,
       sanPhamBienThe: [''],
-      quaTang: [''],
-      giamGiaVoucher: 0
+      quaTang: ['']
     });
   }
 
   addRow() {
     this.chiTietDonHangs.push(this.newRow());
-    this.calculateTotal();
   }
 
   removeRow(i: number) {
     this.chiTietDonHangs.removeAt(i);
-    this.calculateTotal();
   }
 
   // Tải danh sách khách hàng
@@ -140,16 +145,23 @@ export class DonHangDetailComponent implements OnInit, OnDestroy {
   }
 
   calculateTotal() {
-    const total = this.chiTietDonHangs.controls.reduce(
+
+    const subTotal = this.chiTietDonHangs.controls.reduce(
       (sum, row) => sum + this.getThanhTien(row as FormGroup),
       0
     );
+
+    const voucher = this.form.get('giamGiaVoucher')?.value || 0;
+
+    let total = subTotal - voucher;
+
+    if (total < 0) total = 0;
 
     this.form.get('tongTien')?.setValue(total);
   }
 
   loadSanPham() {
-    this.sanPhamService.getListAll()
+    this.sanPhamService.getListSelect()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(res => {
         this.sanPhamOptions = res.map(x => ({
@@ -171,6 +183,7 @@ export class DonHangDetailComponent implements OnInit, OnDestroy {
             ngayDat: res.ngayDat ? new Date(res.ngayDat) : null,
             taiKhoanKhachHangId: res.taiKhoanKhachHangId
           });
+          this.updateStatusOptions();
 
           this.chiTietDonHangs.clear();
           res.chiTietDonHangDtos?.forEach((ct: any) => {
@@ -178,7 +191,6 @@ export class DonHangDetailComponent implements OnInit, OnDestroy {
               sanPhamId: ct.sanPhamId,
               soLuong: ct.soLuong,
               gia: ct.gia,
-              giamGiaVoucher: ct.giamGiaVoucher,
               sanPhamBienThe: ct.sanPhamBienThe || '',
               quaTang: ct.quaTang || ''
             }));
@@ -213,8 +225,63 @@ export class DonHangDetailComponent implements OnInit, OnDestroy {
       error: () => this.toggleBlockUI(false)
     });
   }
+  updateStatusOptions() {
+    const currentStatus = this.form.get('trangThai')?.value;
+    this.trangThaiOptions = this.trangThaiOptions.map(option => {
+      const value = option.value;
+      let disabled = true;
+      if (value === currentStatus) {
+        disabled = false;
+      } else {
+        switch (currentStatus) {
+          case 0:
+            disabled = ![1, 4].includes(value);
+            break;
 
+          case 1:
+            disabled = ![2, 4].includes(value);
+            break;
 
+          case 2:
+            disabled = ![3, 4].includes(value);
+            break;
+
+          case 3:
+            disabled = true;
+            break;
+
+          case 4:
+            disabled = true;
+            break;
+        }
+      }
+      return {
+        ...option,
+        disabled
+      };
+    });
+  }
+  updateStatus() {
+    const id = this.config.data?.id;
+
+    if (!id) return;
+
+    const status = this.form.get('trangThai')?.value;
+
+    this.toggleBlockUI(true);
+
+    this.donHangService.updateStatus(id, status)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+
+          this.toggleBlockUI(false);
+          alert('Cập nhật trạng thái thành công');
+
+        },
+        error: () => this.toggleBlockUI(false)
+      });
+  }
   cancel() {
     this.ref.close();
   }

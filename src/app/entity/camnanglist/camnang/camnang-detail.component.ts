@@ -40,7 +40,6 @@ export class CamnangDetailComponent implements OnInit, OnDestroy {
 
   validationMessages = {
     ten: [{ type: 'required', message: 'Bạn phải nhập tên cẩm nang' }],
-    slug: [{ type: 'required', message: 'Bạn phải nhập slug' }],
     mota: [{ type: 'required', message: 'Bạn phải nhập nội dung' }],
     danhMucCamNangId: [{ type: 'required', message: 'Bạn phải chọn danh mục' }]
   };
@@ -77,7 +76,7 @@ export class CamnangDetailComponent implements OnInit, OnDestroy {
   buildForm() {
     this.form = this.fb.group({
       ten: new FormControl(this.selectedEntity.ten || null, Validators.required),
-      slug: new FormControl(this.selectedEntity.slug || null, Validators.required),
+      slug: new FormControl(this.selectedEntity.slug || null),
       mota: new FormControl(this.selectedEntity.mota || null, Validators.required),
       danhMucCamNangId: new FormControl(
         this.selectedEntity.danhMucCamNangId || null,
@@ -214,6 +213,10 @@ export class CamnangDetailComponent implements OnInit, OnDestroy {
   }
 
   private saveCamNang() {
+    const slug = this.form.get('slug')?.value?.trim();
+    if (!slug && this.form.get('ten')?.value?.trim()) {
+      this.form.patchValue({ slug: this.util.MakeSeoTitle(this.form.get('ten')!.value.trim()) });
+    }
     const request = this.util.isEmpty(this.config.data?.id)
       ? this.service.create(this.form.value)
       : this.service.update(this.config.data.id, this.form.value);

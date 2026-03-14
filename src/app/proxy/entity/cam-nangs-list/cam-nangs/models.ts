@@ -27,6 +27,11 @@ export interface CamNangInListDto extends EntityDto<string> {
   tenDanhMuc?: string;
 }
 
+export interface CamNangSelectDto {
+  id?: string;
+  ten?: string;
+}
+
 export interface CreateUpdateCamNangDto {
   ten?: string;
   slug?: string;

@@ -82,6 +82,12 @@ export class AppMenu implements OnInit {
                 icon: 'pi pi-fw pi-book',
                 routerLink: ['/entity/camnang'],
                 permission: 'VietlifeStore.CamNang.View',
+              },
+              {
+                label: 'Bình luận cẩm nang',
+                icon: 'pi pi-fw pi-comments',
+                routerLink: ['/entity/binhluanbaiviet'],
+                permission: 'VietlifeStore.CamNang.View',
               }
             ],
           },
@@ -107,6 +113,12 @@ export class AppMenu implements OnInit {
                 routerLink: ['/entity/quatang'],
                 permission: 'VietlifeStore.QuaTang.View',
               },
+              {
+                label: 'Đánh giá sản phẩm',
+                icon: 'pi pi-fw pi-comments',
+                routerLink: ['/entity/sanphamreview'],
+                permission: 'VietlifeStore.SanPham.View',
+              }
             ],
           },
           {
@@ -136,6 +148,12 @@ export class AppMenu implements OnInit {
                 icon: 'pi pi-fw pi-shopping-cart',
                 routerLink: ['/entity/donhang'],
                 permission: 'VietlifeStore.DonHang.View',
+              },
+              {
+                label: 'Đơn hàng VNPAY',
+                icon: 'pi pi-fw pi-shopping-cart',
+                routerLink: ['/entity/donhangvnpay'],
+                permission: 'VietlifeStore.PaymentInformationModel.View',
               },
               {
                 label: 'Voucher',

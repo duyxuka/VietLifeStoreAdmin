@@ -66,7 +66,7 @@ export class DanhMucSanPhamsService {
     this.restService.request<any, PagedResultDto<DanhMucSanPhamInListDto>>({
       method: 'GET',
       url: '/api/app/danh-muc-san-phams/filter',
-      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, id: input.id, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

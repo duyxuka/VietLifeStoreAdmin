@@ -25,13 +25,21 @@ export class DonhangComponent implements OnInit, OnDestroy {
   maxResultCount = 10;
   totalCount = 0;
   keyword = '';
-
+  trangThaiOptions = [
+    { label: 'Tất cả', value: null },
+    { label: 'Chờ xác nhận', value: 0 },
+    { label: 'Đang xử lý', value: 1 },
+    { label: 'Đang giao', value: 2 },
+    { label: 'Hoàn thành', value: 3 },
+    { label: 'Đã hủy', value: 4 },
+    { label: 'Khách hủy giao dịch VNPAY', value: 7 }
+  ];
   constructor(
     private service: DonHangsService,
     private dialogService: DialogService,
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -50,15 +58,15 @@ export class DonhangComponent implements OnInit, OnDestroy {
       skipCount: this.skipCount,
       maxResultCount: this.maxResultCount
     })
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next: res => {
-        this.items = res.items;
-        this.totalCount = res.totalCount;
-        this.toggleBlockUI(false);
-      },
-      error: () => this.toggleBlockUI(false)
-    });
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: res => {
+          this.items = res.items;
+          this.totalCount = res.totalCount;
+          this.toggleBlockUI(false);
+        },
+        error: () => this.toggleBlockUI(false)
+      });
   }
 
   pageChanged(event: any) {
@@ -83,6 +91,29 @@ export class DonhangComponent implements OnInit, OnDestroy {
         this.selectedItems = [];
       }
     });
+  }
+
+  getTrangThaiSeverity(trangThai: number): string {
+    switch (trangThai) {
+      case 0:
+        return 'warning';
+      case 1:
+        return 'info';
+      case 2:
+        return 'primary';
+      case 3:
+        return 'success';
+      case 4:
+        return 'danger';
+      case 7:
+        return 'warning';
+      default:
+        return 'secondary';
+    }
+  }
+  getTrangThaiLabel(trangThai: number): string {
+    const item = this.trangThaiOptions.find(x => x.value === trangThai);
+    return item ? item.label : '';
   }
 
   showEditModal() {

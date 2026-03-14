@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from '../service/layout.service';
+import { PermissionService } from '@abp/ng.core';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -88,7 +89,8 @@ export class AppMenuitem {
 
     constructor(
         public router: Router,
-        private layoutService: LayoutService
+        private layoutService: LayoutService,
+        private permissionService: PermissionService
     ) {
         this.menuSourceSubscription = this.layoutService.menuSource$.subscribe((value) => {
             Promise.resolve(null).then(() => {
@@ -115,6 +117,12 @@ export class AppMenuitem {
 
     ngOnInit() {
         this.key = this.parentKey ? this.parentKey + '-' + this.index : String(this.index);
+        const permission = this.item['permission'];
+
+        if (permission) {
+            const granted = this.permissionService.getGrantedPolicy(permission);
+            this.item.visible = granted;
+        }
 
         if (this.item.routerLink) {
             this.updateActiveStateFromRoute();

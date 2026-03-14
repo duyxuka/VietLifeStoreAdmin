@@ -45,6 +45,15 @@ export class VouchersService {
     { apiName: this.apiName,...config });
   
 
+  getAvailableVouchers = (orderTotal: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, VoucherDto[]>({
+      method: 'GET',
+      url: '/api/app/vouchers/available-vouchers',
+      params: { orderTotal },
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (input: PagedResultRequestDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<VoucherDto>>({
       method: 'GET',
@@ -66,7 +75,7 @@ export class VouchersService {
     this.restService.request<any, PagedResultDto<VoucherInListDto>>({
       method: 'GET',
       url: '/api/app/vouchers/filter',
-      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, id: input.id, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
@@ -76,6 +85,15 @@ export class VouchersService {
       method: 'PUT',
       url: `/api/app/vouchers/${id}`,
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  validateVoucher = (code: string, orderTotal: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, VoucherDto>({
+      method: 'POST',
+      url: '/api/app/vouchers/validate-voucher',
+      params: { code, orderTotal },
     },
     { apiName: this.apiName,...config });
 

@@ -13,103 +13,130 @@ import { DonhangComponent } from "./donhanglist/donhang/donhang.component";
 import { VoucherComponent } from "./donhanglist/voucher/voucher.component";
 import { LienheComponent } from "./lienhe/lienhe.component";
 import { VideoplatformComponent } from "./videoplatform/videoplatform.component";
+import { DonhangvnpayCompoment } from "./donhanglist/donhangvnpay/donhangvnpay.compoment";
+import { BinhluanbaivietComponent } from "./camnanglist/binhluanbaiviet/binhluanbaiviet.compoment";
+import { SanphamreviewComponent } from "./sanphamlist/sanphamreview/sanphamreview.compoment";
 
 const routes: Routes = [
   {
     path: 'sanpham',
     component: SanphamComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.SanPham.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.SanPham.View',
+    },
   },
   {
     path: 'danhmucsanpham',
     component: DanhmucsanphamComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.DanhMucSanPham.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.DanhMucSanPham.View',
+    },
   },
   {
     path: 'quatang',
     component: QuatangComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.QuaTang.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.QuaTang.View',
+    },
   },
   {
     path: 'banner',
     component: BannerComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.Banner.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.Banner.View',
+    },
   },
   {
     path: 'danhmuccamnang',
     component: DanhmuccamnangComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.DanhMucCamNang.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.DanhMucCamNang.View',
+    },
   },
   {
     path: 'camnang',
     component: CamnangComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.CamNang.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.CamNang.View',
+    },
   },
   {
     path: 'danhmucchinhsach',
     component: DanhmucchinhsachComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.DanhMucChinhSach.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.DanhMucChinhSach.View',
+    },
   },
   {
     path: 'chinhsach',
     component: ChinhsachComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.ChinhSach.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.ChinhSach.View',
+    },
   },
   {
     path: 'donhang',
     component: DonhangComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.DonHang.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.DonHang.View',
+    },
   },
   {
     path: 'voucher',
     component: VoucherComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.Voucher.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.Voucher.View',
+    },
   },
   {
     path: 'lienhe',
     component: LienheComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.LienHe.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.LienHe.View',
+    },
   },
   {
     path: 'videoplatform',
     component: VideoplatformComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'VietLifeStore.VideoSocial.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.VideoSocial.View',
+    },
+  },
+  {
+    path: 'donhangvnpay',
+    component: DonhangvnpayCompoment,
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.PaymentInformationModel.View',
+    },
+  },
+  {
+    path: 'binhluanbaiviet',
+    component: BinhluanbaivietComponent,
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.CamNang.View',
+    },
+  },
+  {
+    path: 'sanphamreview',
+    component: SanphamreviewComponent,
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'VietlifeStore.SanPham.View',
+    },
   },
 
 ];

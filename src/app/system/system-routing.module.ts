@@ -8,18 +8,18 @@ const routes: Routes = [
   {
     path: 'role',
     component: RoleComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'AbpIdentity.Roles.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'AbpIdentity.Roles.View',
+    },
   },
   {
     path: 'user',
     component: UserComponent,
-    // canActivate: [permissionGuard],
-    // data: {
-    //   requiredPolicy: 'AbpIdentity.Users.View',
-    // },
+    canActivate: [permissionGuard],
+    data: {
+      requiredPolicy: 'AbpIdentity.Users.View',
+    },
   },
 ];
 

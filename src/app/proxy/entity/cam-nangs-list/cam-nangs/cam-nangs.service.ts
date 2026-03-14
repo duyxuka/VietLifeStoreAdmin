@@ -1,4 +1,4 @@
-import type { CamNangDto, CamNangInListDto, CreateUpdateCamNangDto } from './models';
+import type { CamNangDto, CamNangInListDto, CamNangSelectDto, CreateUpdateCamNangDto } from './models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto, PagedResultRequestDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
@@ -93,7 +93,15 @@ export class CamNangsService {
     this.restService.request<any, PagedResultDto<CamNangInListDto>>({
       method: 'GET',
       url: '/api/app/cam-nangs/filter',
-      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, id: input.id, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListSelect = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, CamNangSelectDto[]>({
+      method: 'GET',
+      url: '/api/app/cam-nangs/select',
     },
     { apiName: this.apiName,...config });
   

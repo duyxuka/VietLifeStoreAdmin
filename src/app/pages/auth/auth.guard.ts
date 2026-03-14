@@ -8,18 +8,22 @@ export class AuthGuard implements CanActivate {
   constructor(private tokenService: TokenStorageService, private router: Router,private auth: AuthService) {}
 
   canActivate(): boolean {
-    const token = this.tokenService.getToken();
-    if (!token) {
-      this.router.navigate(['/auth/login']);
-      return false;
-    }
-    const role = this.auth.getUserRole();
-
-    if (role !== 'Admin') {
-      this.router.navigate(['/auth/login']);
-      return false;
-    }
-
-    return true;
+  const token = this.tokenService.getToken();
+  if (!token) {
+    this.router.navigate(['/auth/login']);
+    return false;
   }
+
+  const role = this.auth.getUserRole();
+  const isAdmin = Array.isArray(role) 
+    ? role.includes('admin') || role.includes('Admin')
+    : role === 'admin' || role === 'Admin';
+
+  if (!isAdmin) {
+    this.router.navigate(['/auth/login']);
+    return false;
+  }
+
+  return true;
+}
 }

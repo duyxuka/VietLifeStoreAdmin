@@ -11,6 +11,14 @@ export class DonHangsService {
   apiName = 'Default';
   
 
+  cancelOrder = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/don-hangs/${id}/cancel-order`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   create = (input: CreateUpdateDonHangDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, DonHangDto>({
       method: 'POST',
@@ -66,7 +74,16 @@ export class DonHangsService {
     this.restService.request<any, PagedResultDto<DonHangInListDto>>({
       method: 'GET',
       url: '/api/app/don-hangs/filter',
-      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, id: input.id, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getMyOrdersPaged = (skipCount: number, maxResultCount: number, trangThai: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PagedResultDto<DonHangDto>>({
+      method: 'GET',
+      url: '/api/app/don-hangs/my-orders-paged',
+      params: { skipCount, maxResultCount, trangThai },
     },
     { apiName: this.apiName,...config });
   
@@ -76,6 +93,15 @@ export class DonHangsService {
       method: 'PUT',
       url: `/api/app/don-hangs/${id}`,
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateStatus = (id: string, status: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'PUT',
+      url: `/api/app/don-hangs/${id}/status`,
+      params: { status },
     },
     { apiName: this.apiName,...config });
 

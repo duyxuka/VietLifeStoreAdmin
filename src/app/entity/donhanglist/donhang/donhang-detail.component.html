@@ -62,7 +62,19 @@
             fluid>
           </p-select>
         </div>
+        <div>
+          <label class="block font-bold mb-2">Voucher giảm giá</label>
+          <p-inputNumber
+            formControlName="giamGiaVoucher"
+            [min]="0"
+            (onInput)="calculateTotal()"
+            mode="currency"
+            currency="VND"
+            locale="vi-VN"
+            fluid>
+          </p-inputNumber>
 
+        </div>
         <div>
           <label class="block font-bold mb-2">Ngày đặt</label>
           <p-datepicker
@@ -72,7 +84,30 @@
             fluid>
           </p-datepicker>
         </div>
+        <div class="flex items-end gap-2">
+          <div class="flex-1">
+            <label class="block font-bold mb-2">Trạng thái đơn hàng</label>
 
+            <p-select
+              formControlName="trangThai"
+              [options]="trangThaiOptions"
+              optionLabel="label"
+              optionValue="value"
+              optionDisabled="disabled"
+              placeholder="Chọn trạng thái"
+              fluid>
+            </p-select>
+          </div>
+
+          <div class="">
+            <p-button
+              label="Cập nhật trạng thái đơn hàng"
+              icon="pi pi-check"
+              severity="success"
+              (onClick)="updateStatus()">
+            </p-button>
+          </div>
+        </div>
       </div>
 
       <!-- CHI TIẾT SẢN PHẨM -->
@@ -90,7 +125,6 @@
               <th>Quà tặng</th>
               <th>Số lượng</th>
               <th>Giá</th>
-              <th>Giảm giá voucher</th>
               <th>Thành tiền</th>
               <th class="text-center">Thao tác</th>
             </tr>
@@ -138,15 +172,6 @@
               <td>
                 <p-inputNumber
                   formControlName="gia"
-                  [min]="0"
-                  (onInput)="calculateTotal()"
-                  fluid>
-                </p-inputNumber>
-              </td>
-
-              <td>
-                <p-inputNumber
-                  formControlName="giamGiaVoucher"
                   [min]="0"
                   (onInput)="calculateTotal()"
                   fluid>

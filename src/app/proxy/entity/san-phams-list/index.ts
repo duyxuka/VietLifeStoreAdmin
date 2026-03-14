@@ -4,6 +4,7 @@ import * as GiaTriThuocTinhs from './gia-tri-thuoc-tinhs';
 import * as QuaTangs from './qua-tangs';
 import * as SanPhamBienTheThuocTinhs from './san-pham-bien-the-thuoc-tinhs';
 import * as SanPhamBienThes from './san-pham-bien-thes';
+import * as SanPhamReviews from './san-pham-reviews';
 import * as SanPhams from './san-phams';
 import * as ThuocTinhs from './thuoc-tinhs';
-export { AnhSanPhams, DanhMucSanPhams, GiaTriThuocTinhs, QuaTangs, SanPhamBienTheThuocTinhs, SanPhamBienThes, SanPhams, ThuocTinhs };
+export { AnhSanPhams, DanhMucSanPhams, GiaTriThuocTinhs, QuaTangs, SanPhamBienTheThuocTinhs, SanPhamBienThes, SanPhamReviews, SanPhams, ThuocTinhs };

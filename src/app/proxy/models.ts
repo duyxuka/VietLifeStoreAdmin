@@ -4,4 +4,5 @@ export interface BaseListFilterDto extends PagedResultRequestDto {
   keyword?: string;
   sort?: string;
   danhMucSlug?: string;
+  id?: string;
 }

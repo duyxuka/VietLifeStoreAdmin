@@ -266,6 +266,10 @@ export class DanhmucsanphamDetailComponent implements OnInit, OnDestroy {
   }
 
   private saveDanhMuc() {
+    const slug = this.form.get('slug')?.value?.trim();
+    if (!slug && this.form.get('ten')?.value?.trim()) {
+      this.form.patchValue({ slug: this.util.MakeSeoTitle(this.form.get('ten')!.value.trim()) });
+    }
     const request = this.util.isEmpty(this.config.data?.id)
       ? this.service.create(this.form.value)
       : this.service.update(this.config.data.id, this.form.value);

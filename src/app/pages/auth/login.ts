@@ -129,7 +129,7 @@ export class Login implements OnDestroy {
         this.tokenService.saveRefreshToken(res.refresh_token);
 
         const role = this.authService.getUserRole();
-        if (role === 'Admin') {
+        if (role === 'Admin' || role === 'admin') {
           setTimeout(() => {
             this.blockedPanel = false;
             window.location.href = '/admin/dashboard';

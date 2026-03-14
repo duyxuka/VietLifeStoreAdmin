@@ -1,0 +1,116 @@
+<div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+  <!-- Chọn sản phẩm -->
+  <div>
+    <label class="block mb-2 font-medium">Sản phẩm <span style="color:red">*</span></label>
+    <p-select
+      [options]="sanPhamOptions"
+      [(ngModel)]="selectedSanPhamId"
+      placeholder="-- Chọn sản phẩm --"
+      optionLabel="label"
+      optionValue="value"
+      [filter]="true"
+      filterPlaceholder="Tìm sản phẩm..."
+      styleClass="w-full"
+      appendTo="body"
+    />
+  </div>
+
+  <!-- Toolbar hàng -->
+  <div style="display: flex; gap: 8px; align-items: center;">
+    <p-button
+      label="Thêm dòng"
+      icon="pi pi-plus"
+      severity="secondary"
+      (onClick)="addRow()"
+    />
+    <p-button
+      label="Tự động điền mẫu"
+      icon="pi pi-sparkles"
+      severity="help"
+      (onClick)="autoFill()"
+    />
+    <span style="font-size: 13px; color: var(--text-color-secondary);">
+      {{ rows.length }} dòng
+    </span>
+  </div>
+
+  <!-- Bảng nhập liệu -->
+  <p-table [value]="rows" [scrollable]="true" scrollHeight="340px">
+    <ng-template #header>
+      <tr>
+        <th style="width: 180px;">Tên người dùng</th>
+        <th style="width: 200px;">Email</th>
+        <th style="width: 150px;">Số sao</th>
+        <th>Nội dung đánh giá</th>
+        <th style="width: 60px;"></th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-row let-i="rowIndex">
+      <tr>
+        <td>
+          <input
+            pInputText
+            [(ngModel)]="row.tenNguoiDung"
+            placeholder="Nguyễn Văn A"
+            class="w-full"
+          />
+        </td>
+        <td>
+          <input
+            pInputText
+            [(ngModel)]="row.email"
+            placeholder="email@gmail.com"
+            class="w-full"
+          />
+        </td>
+        <td>
+          <p-select
+            [options]="soSaoOptions"
+            [(ngModel)]="row.soSao"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+            appendTo="body"
+          />
+        </td>
+        <td>
+          <input
+            pInputText
+            [(ngModel)]="row.noiDung"
+            placeholder="Nội dung đánh giá..."
+            class="w-full"
+          />
+        </td>
+        <td>
+          <p-button
+            icon="pi pi-trash"
+            [text]="true"
+            severity="danger"
+            (onClick)="removeRow(i)"
+            [disabled]="rows.length === 1"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Footer buttons -->
+  <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 8px;">
+    <p-button
+      label="Hủy"
+      icon="pi pi-times"
+      severity="secondary"
+      (onClick)="cancel()"
+    />
+    <p-button
+      label="Seeding"
+      icon="pi pi-bolt"
+      severity="help"
+      [loading]="loading"
+      (onClick)="submitSeeding()"
+    />
+  </div>
+
+</div>

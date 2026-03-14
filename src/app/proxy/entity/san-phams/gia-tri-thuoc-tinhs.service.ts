@@ -66,7 +66,7 @@ export class GiaTriThuocTinhsService {
     this.restService.request<any, PagedResultDto<GiaTriThuocTinhInListDto>>({
       method: 'GET',
       url: '/api/app/gia-tri-thuoc-tinhs/filter',
-      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, id: input.id, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

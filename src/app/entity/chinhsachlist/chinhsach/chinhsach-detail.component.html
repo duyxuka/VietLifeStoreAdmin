@@ -46,13 +46,13 @@
           <label class="block font-bold mb-2">
             Nội dung <span class="text-red-500">*</span>
           </label>
-          <textarea
-            pInputTextarea
-            rows="8"
-            formControlName="noiDung"
-            placeholder="Nhập nội dung chính sách"
-            fluid
-          ></textarea>
+          @if (editorReady) {
+            <ckeditor
+              [editor]="Editor"
+              [config]="configCkeditor"
+              formControlName="noiDung">
+            </ckeditor>
+          }
           <app-validation-message
             [entityForm]="form"
             fieldName="noiDung"

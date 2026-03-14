@@ -72,6 +72,9 @@ export interface SanPhamInListDto extends EntityDto<string> {
   danhMucId?: string;
   anh?: string;
   slug?: string;
+  thuTu?: number;
+  luotXem?: number;
+  luotMua?: number;
   moTaNgan?: string;
   trangThai: boolean;
   laDatLich: boolean;
@@ -83,4 +86,9 @@ export interface SanPhamInListDto extends EntityDto<string> {
   quaTangTen?: string;
   quaTangGia?: number;
   hasVariants: boolean;
+}
+
+export interface SanPhamSelectDto {
+  id?: string;
+  ten?: string;
 }

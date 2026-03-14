@@ -1,6 +1,6 @@
 import { Environment } from '@abp/ng.core';
 
-const baseUrl = 'http://42.96.61.186:8090/';
+const baseUrl = 'http://42.96.61.186:8090';
 
 const oAuthConfig = {
   issuer: 'http://42.96.61.186:8090/',

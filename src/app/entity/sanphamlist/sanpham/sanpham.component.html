@@ -57,6 +57,7 @@
         <th style="width:3rem">
           <p-tableHeaderCheckbox />
         </th>
+        <th style="width:6rem">Thứ tự</th>
         <th style="min-width: 8rem">Ảnh</th>
         <th style="min-width: 18rem">Tên sản phẩm</th>
         <th style="min-width: 12rem">Giá</th>
@@ -70,7 +71,15 @@
         <td>
           <p-tableCheckbox [value]="row" />
         </td>
-
+        <td>
+          <input
+            type="number"
+            pInputText
+            style="width:70px"
+            [(ngModel)]="row.thuTu"
+            (blur)="updateThuTu(row)"
+          />
+        </td>
         <!-- ✅ Avatar - Dùng static URL -->
         <td>
           @if (row.anh) {

@@ -24,18 +24,13 @@
         <!-- Slug -->
         <div>
           <label class="block font-bold mb-2">
-            Slug <span class="text-red-500">*</span>
+            Slug(tự động tạo hoặc nhập thủ công) <span class="text-red-500">*</span>
           </label>
           <input
             pInputText
             formControlName="slug"
             placeholder="tu-dong-tao-slug"
             fluid
-          />
-          <app-validation-message
-            [entityForm]="form"
-            fieldName="slug"
-            [validationMessages]="validationMessages"
           />
         </div>
 
@@ -83,7 +78,7 @@
           }
         </div>
         <!-- Mô tả / Nội dung -->
-        <div>
+        <div class="description">
           <label class="block font-bold mb-2">
             Nội dung <span class="text-red-500">*</span>
           </label>

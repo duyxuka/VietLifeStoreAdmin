@@ -31,10 +31,6 @@ export class DanhmucchinhsachDetailComponent implements OnInit, OnDestroy {
     ten: [
       { type: 'required', message: 'Bạn phải nhập tên danh mục' },
       { type: 'maxlength', message: 'Không quá 255 ký tự' }
-    ],
-    slug: [
-      { type: 'required', message: 'Bạn phải nhập slug' },
-      { type: 'maxlength', message: 'Không quá 255 ký tự' }
     ]
   };
 
@@ -45,7 +41,7 @@ export class DanhmucchinhsachDetailComponent implements OnInit, OnDestroy {
     private ref: DynamicDialogRef,
     private util: UtilityService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -64,10 +60,7 @@ export class DanhmucchinhsachDetailComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.maxLength(255)
       ]),
-      slug: new FormControl(this.selectedEntity.slug || null, [
-        Validators.required,
-        Validators.maxLength(255)
-      ]),
+      slug: new FormControl(this.selectedEntity.slug || null),
       trangThai: new FormControl(this.selectedEntity.trangThai ?? true),
       titleSEO: new FormControl(this.selectedEntity.titleSEO || null),
       keyword: new FormControl(this.selectedEntity.keyword || null),
@@ -100,7 +93,10 @@ export class DanhmucchinhsachDetailComponent implements OnInit, OnDestroy {
 
   saveChange() {
     this.toggleBlockUI(true);
-
+    const slug = this.form.get('slug')?.value?.trim();
+    if (!slug && this.form.get('ten')?.value?.trim()) {
+      this.form.patchValue({ slug: this.util.MakeSeoTitle(this.form.get('ten')!.value.trim()) });
+    }
     const request = this.util.isEmpty(this.config.data?.id)
       ? this.service.create(this.form.value)
       : this.service.update(this.config.data.id, this.form.value);

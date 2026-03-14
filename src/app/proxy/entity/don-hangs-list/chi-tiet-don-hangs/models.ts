@@ -4,10 +4,10 @@ export interface ChiTietDonHangDto {
   donHangId?: string;
   sanPhamId?: string;
   sanPhamBienThe?: string;
+  tenSanPham?: string;
   quaTang?: string;
   soLuong: number;
   gia: number;
-  giamGiaVoucher: number;
   trangThai: boolean;
 }
 
@@ -19,6 +19,5 @@ export interface CreateUpdateChiTietDonHangDto {
   quaTang?: string;
   soLuong: number;
   gia: number;
-  giamGiaVoucher: number;
   trangThai: boolean;
 }

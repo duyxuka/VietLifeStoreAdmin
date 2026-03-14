@@ -1,5 +1,15 @@
 import type { AuditedEntityDto } from '@abp/ng.core';
 
+export interface AccountAppService_ChangePasswordDto {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface AccountAppService_UpdateProfileDto {
+  name: string;
+  phoneNumber?: string;
+}
+
 export interface CreateUserDto {
   name?: string;
   surname?: string;
@@ -26,6 +36,7 @@ export interface UpdateUserDto {
 }
 
 export interface UserDto extends AuditedEntityDto<string> {
+  id?: string;
   name?: string;
   userName?: string;
   email?: string;

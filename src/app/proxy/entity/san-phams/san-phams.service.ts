@@ -2,7 +2,7 @@ import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto, PagedResultRequestDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { BaseListFilterDto } from '../../models';
-import type { CreateUpdateSanPhamDto, SanPhamDto, SanPhamInListDto } from '../san-phams-list/san-phams/models';
+import type { CreateUpdateSanPhamDto, SanPhamDto, SanPhamInListDto, SanPhamSelectDto } from '../san-phams-list/san-phams/models';
 
 @Injectable({
   providedIn: 'root',
@@ -84,7 +84,15 @@ export class SanPhamsService {
     this.restService.request<any, PagedResultDto<SanPhamInListDto>>({
       method: 'GET',
       url: '/api/app/san-phams/filter',
-      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { keyword: input.keyword, sort: input.sort, danhMucSlug: input.danhMucSlug, id: input.id, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getListSelect = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SanPhamSelectDto[]>({
+      method: 'GET',
+      url: '/api/app/san-phams/select',
     },
     { apiName: this.apiName,...config });
   
@@ -103,6 +111,15 @@ export class SanPhamsService {
       method: 'PUT',
       url: `/api/app/san-phams/${id}`,
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  updateThuTuByIdAndThuTu = (id: string, thuTu: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'PUT',
+      url: `/api/app/san-phams/${id}/thu-tu`,
+      params: { thuTu },
     },
     { apiName: this.apiName,...config });
 

@@ -11,6 +11,7 @@ import { UtilityService } from '@/shared/services/utility.service';
 import { ChinhSachDto } from '@/proxy/entity/chinh-sachs-list/chinh-sachs';
 import { ChinhSachsService } from '@/proxy/entity/chinh-sachs';
 import { DanhMucChinhSachsService } from '@/proxy/entity/chinh-sachs';
+import { CkeditorConfigService } from 'src/ckeditor-config.service';
 
 @Component({
   selector: 'app-chinhsach-detail',
@@ -27,7 +28,9 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
 
   blockedPanel = false;
   btnDisabled = false;
-
+  public Editor: any;
+  public configCkeditor: any;
+  editorReady = false;
   danhMucOptions: any[] = [];
 
   validationMessages = {
@@ -49,10 +52,14 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
     private config: DynamicDialogConfig,
     private ref: DynamicDialogRef,
     private util: UtilityService,
-    private notificationService: NotificationService
-  ) {}
+    private notificationService: NotificationService,
+    private ckeditorConfigService: CkeditorConfigService,
+  ) { }
 
   ngOnInit(): void {
+    this.Editor = this.ckeditorConfigService.getEditor();
+    this.configCkeditor = this.ckeditorConfigService.getEditorConfig();
+
     this.buildForm();
     this.loadDanhMuc();
     this.initData();
@@ -63,7 +70,10 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
     this.ref.close();
   }
-
+  private prepareEditor() {
+    this.editorReady = false;
+    setTimeout(() => this.editorReady = true, 100);
+  }
   buildForm() {
     this.form = this.fb.group({
       tieuDe: new FormControl(this.selectedEntity.tieuDe || null, Validators.required),
@@ -85,13 +95,13 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
   }
 
   initData() {
-    this.toggleBlockUI(true);
-
     if (this.util.isEmpty(this.config.data?.id)) {
-      this.toggleBlockUI(false);
-    } else {
-      this.loadDetail(this.config.data.id);
+      this.prepareEditor(); 
+      return;
     }
+
+    this.toggleBlockUI(true);
+    this.loadDetail(this.config.data.id);
   }
 
   loadDetail(id: string) {
@@ -102,6 +112,7 @@ export class ChinhsachDetailComponent implements OnInit, OnDestroy {
           this.selectedEntity = res;
           this.buildForm();
           this.toggleBlockUI(false);
+          this.prepareEditor();
         },
         error: () => this.toggleBlockUI(false)
       });

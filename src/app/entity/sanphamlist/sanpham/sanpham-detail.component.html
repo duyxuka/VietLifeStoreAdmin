@@ -31,6 +31,16 @@
           <label class="font-bold mb-2 block">Slug (tự động tạo từ tên)</label>
           <input pInputText formControlName="slug" placeholder="tu-dong-tao-hoac-tu-nhap" fluid />
         </div>
+
+        <div>
+          <label class="font-bold mb-2 block">Lượt xem <span class="text-red-500">*</span></label>
+          <p-inputNumber formControlName="luotXem" [min]="0" [useGrouping]="false" placeholder="Nhập lượt xem" inputStyleClass="w-full"></p-inputNumber>
+        </div>
+
+        <div>
+          <label class="font-bold mb-2 block">Lượt mua <span class="text-red-500">*</span></label>
+           <p-inputNumber formControlName="luotMua" [min]="0" [useGrouping]="false" placeholder="Nhập lượt mua" inputStyleClass="w-full"></p-inputNumber>
+        </div>
         <!-- Ảnh chính -->
         <div>
           <label class="font-bold mb-2 block">
@@ -61,25 +71,31 @@
         <div>
           <label class="font-bold mb-2 block">Ảnh phụ (tối đa 9 ảnh)</label>
 
-          <p-fileUpload
-            mode="basic"
-            name="files"
-            accept="image/*"
-            chooseLabel="Chọn ảnh phụ"
-            [auto]="false"
-            customUpload="true"
-            (onSelect)="onAnhPhuSelect($event)"
-            [multiple]="true"
-            class="w-full">
-          </p-fileUpload>
+          <!-- Upload box -->
+          <label class="upload-box">
+            <i class="pi pi-image upload-icon"></i>
+            <span>Chọn ảnh</span>
 
-          <div class="flex flex-wrap gap-4 mt-2">
-            <div *ngFor="let img of anhPhuPreviews; let i = index" class="relative" style="border-radius: 20px; border: 1px solid #a9a9a9; padding: 15px;">
-              <p-image [src]="img" width="150" [preview]="true" />
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              (change)="onAnhPhuSelect($event)"
+            />
+          </label>
+
+          <!-- Preview -->
+          <div class="preview-container">
+            <div
+              *ngFor="let img of anhPhuPreviews; let i = index"
+              class="preview-item"
+            >
+              <p-image [src]="img" width="150"></p-image>
+
               <button
                 pButton
                 icon="pi pi-times"
-                class="p-button-danger p-button-rounded absolute top-0 right-0"
+                class="delete-btn"
                 (click)="removeAnhPhu(i)">
               </button>
             </div>

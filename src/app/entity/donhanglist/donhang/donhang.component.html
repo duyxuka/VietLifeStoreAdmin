@@ -60,6 +60,7 @@
         <th>Ngày đặt</th>
         <th>Tổng SL</th>
         <th>Tổng tiền</th>
+        <th>Trạng thái</th>
       </tr>
     </ng-template>
 
@@ -71,7 +72,12 @@
         <td>{{ row.email }}</td>
         <td>{{ row.ngayDat | date:'dd/MM/yyyy' }}</td>
         <td>{{ row.tongSoLuong }}</td>
-        <td>{{ row.tongTien | number:'1.0-0' }}</td>
+        <td>{{ row.tongTien | number:'1.0-0' }}đ</td>
+        <td>
+          <p-tag
+            [value]="getTrangThaiLabel(row.trangThai)"
+            [severity]="getTrangThaiSeverity(row.trangThai)">
+          </p-tag>
       </tr>
     </ng-template>
   </p-table>
